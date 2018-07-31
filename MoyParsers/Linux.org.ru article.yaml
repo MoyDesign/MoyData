@@ -1,0 +1,41 @@
+info:
+  name: Linux.org.ru article
+  description: Parses a single Linux.org.ru article, like a piece of news, a gallery post or a forum post.
+  author: Moy.Design
+  type: article
+  domain: linux.org.ru
+  path: '/[^/]+/[^/]+/[0-9]+'
+  testPages: 'https://www.linux.org.ru/news/opensource/14278099'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://www.linux.org.ru/favicon.ico"
+
+  - name: title
+    match: "h1[itemprop='headline']"
+
+  - name: date
+    match: "time[itemprop='dateCreated']"
+  
+  - name: author_img_src
+    match:
+      include: ".userpic img.photo:first"
+      attribute: src
+
+  - name: author
+    match: "a[itemprop='creator']:first"
+
+  - name: author_link
+    match:
+      include: "a[itemprop='creator']:first"
+      attribute: href
+
+  - name: article_img_src
+    match:
+      include: ".msg_body img.medium-image"
+      attribute: src
+
+  - name: body
+    match: 
+      include: "div[itemprop='articleBody']"
+      keepBasicMarkup: true

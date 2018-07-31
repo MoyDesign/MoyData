@@ -1,0 +1,70 @@
+info:
+  name: Linux.org.ru feed
+  description: Parses Linux.org.ru news or gallery pages.
+  author: Moy.Design
+  type: feed
+  domain: linux.org.ru
+  path: '/(news|gallery)/?'
+  testPages:
+    - 'https://www.linux.org.ru/news/'
+    - 'https://www.linux.org.ru/gallery/'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://www.linux.org.ru/favicon.ico"
+
+  - name: nav_prev_link
+    match:
+      include: "table.nav td:nth-of-type(1) a"
+      attribute: href
+
+  - name: nav_prev
+    match: "table.nav td:nth-of-type(1) a"
+
+  - name: nav_next_link
+    match: 
+      include: "table.nav td:nth-of-type(2) a"
+      attribute: href
+
+  - name: nav_next
+    match: "table.nav td:nth-of-type(2) a"
+
+  - name: article
+    match: article.news
+    rules:
+      - name: author
+        match: "a[itemprop='creator']"
+
+      - name: author_link
+        match: 
+          include: "a[itemprop='creator']"
+          attribute: href
+
+      - name: author_img_src
+        match: 
+          include: ".entry-userpic img"
+          attribute: src
+
+      - name: title
+        match: "h2 a"
+
+      - name: title_link
+        match: 
+          include: "h2 a"
+          attribute: href
+
+      - name: body
+        match: 
+          include: ".medium-image-container, .msg"
+          keepBasicMarkup: true
+
+      - name: date
+        match: ".sign time"
+
+      - name: comments
+        match: ".nav a:first"
+
+      - name: comments_link
+        match: 
+          include: ".nav a:first"
+          attribute: href

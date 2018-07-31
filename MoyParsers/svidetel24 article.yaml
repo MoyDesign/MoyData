@@ -1,0 +1,31 @@
+info:
+  name: svidetel24 article
+  description: Parses a single article from svidetel24.info.
+  author: Moy.Design
+  type: article
+  domain: svidetel24.info
+  path: '/archives/[0-9]+'
+  testPages: 'http://svidetel24.info/archives/67247'
+
+rules:
+  - name: logo_small_img_src
+    match:
+      include: "link[rel='icon'][sizes='32x32']"
+      attribute: href
+
+  - name: title
+    match: "h1.post-title"
+
+  - name: date
+    match: "span.cat-name.date-color"
+  
+  - name: article_img_src
+    match: 
+      include: ".js-mediator-article img:first"
+      attribute: src
+
+  - name: body
+    match: 
+      include: ".js-mediator-article"
+      keepBasicMarkup: true
+      removeInside: "img:first"

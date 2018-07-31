@@ -1,0 +1,341 @@
+{{!--
+name: Safari-like feed
+type: feed
+author: Moy.Design
+description: Minimalistic template, that displays the feed of some blog
+  in a human-friendly way without needless formatting. Looks somewhat like Safari reader.
+  Does not support small (mobile) screens.
+--}}
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="{{ BASE_URL }}">
+  <title>{{ TITLE }}</title>
+  {{{ ICON_TAGS }}}
+  {{{ OPEN_GRAPH_TAGS }}}
+  <style id="article-content">
+   @media print {
+    .original-url {
+     display: none;
+    }
+   }
+
+   h1.title {
+    font-family: Georgia, Times, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.33em;
+    line-height: 1.25em;
+    margin: 0;
+   }
+
+   h1 {
+    font-size: 1.25em;
+   }
+
+   h2 {
+    font-size: 1.125em;
+   }
+
+   h3 {
+    font-size: 1.05em;
+   }
+
+   .page a {
+    text-decoration: none;
+    color: rgb(32, 0, 127);
+   }
+
+   .page a:visited {
+    color: rgb(32, 0, 127);
+   }
+
+   #article * {
+    max-width: 100%;
+   }
+
+   #article img {
+    margin: 0.5em auto;
+    display: block;
+    height: auto;
+   }
+
+   #article iframe {
+      width: 640px;
+      height: 360px;
+   }
+
+   #article a img {
+    margin: inherit;
+    display: inherit;
+    height: inherit;
+   }
+
+   .page {
+    font: 20px Georgia, Times, "Times New Roman", serif;
+    line-height: 160%;
+    text-align: justify;
+   }
+
+   .page:first-of-type .title {
+    display: block;
+   }
+
+    .author_pic {
+      float: left;
+      margin-right: 0.5em;
+    }
+
+    .date {
+      color: #888;
+      font-size: smaller;
+    }
+
+    .nav {
+      margin: 0 auto;
+      text-align: center;
+    }
+    .nav-prev, .nav-middle, .nav-next {
+      display: inline-block;
+    }
+
+    h3 {
+      margin-bottom: 0;
+    }
+
+    .post-body, .meta {
+      margin-top: 0;
+    }
+
+    .post-body table {
+      width: 100%;
+    }
+
+    .post-body table td.right {
+      text-align: right;
+    }
+    .logo {
+      float: right;
+      margin-left: 0.5em;
+    }
+    .logo img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+  </style>
+  <style id="reader-ui">
+   @media screen {
+    body {
+     margin: 0;
+     padding: 0;
+     background-color: transparent;
+     -webkit-user-select: none;
+    }
+
+    .cached embed, .cached applet, .cached object {
+     display: none !important;
+    }
+
+    #background {
+     background-color: #E0E0E0;
+     position: fixed;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+    }
+
+    #container {
+     margin-left: -431px;
+     left: 50%;
+     width: 862px;
+     height: 100%;
+     position: absolute;
+     pointer-events: none;
+    }
+
+    #centered {
+     position: absolute;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     z-index: 0;
+    }
+
+    #article {
+     /* The width of 819px here includes 19px for the WebKit scrollbar’s width. */
+     /* The padding-right of 8px separates the scrollbar from the article itself. */
+     position: absolute;
+     height: 100%;
+     left: 34px;
+     width: 819px;
+     padding-right: 8px;
+     z-index: 0;
+     outline: none;
+     pointer-events: auto;
+     -webkit-user-select: auto;
+     -webkit-transform: translateZ(0);
+    }
+
+    .page:first-of-type {
+     margin-top: 22px;
+    }
+
+    .page:last-of-type {
+     margin-bottom: 22px;
+    }
+
+    .page {
+     width: 658px;
+     margin-left: auto;
+     margin-right: auto;
+     margin-top: 10px;
+     padding: 45px 70px;
+     color: black;
+     background: white;
+     border: 1px solid #c3c3c3;
+     position: relative;
+     overflow-x: hidden;
+     /*******/
+     font-family: Georgia, Times, 'Times New Roman', serif;
+     font-size: 17px;
+     line-height: 1.4;
+    }
+
+   }
+  </style>
+ </head>
+ <body>
+  <div id="background"></div>
+  <div id="container">
+    <div id="centered">
+    <div id="article" tabindex="0">
+      <div class="page">
+        <div class='logo'>
+          {{#if logo_small_img_src}}
+            <a href="{{#if logo_small_link}}{{logo_small_link}}{{else}}/{{/if}}">
+              <img src="{{logo_small_img_src}}">
+            </a>
+          {{/if}}
+        </div>
+        <div class='nav'>
+          <span class='nav-prev'>
+            {{#if nav_prev}}
+              {{#if nav_prev_link}}
+                <a href="{{nav_prev_link}}">{{{nav_prev}}}</a>
+              {{else}}
+                {{{nav_prev}}}
+              {{/if}}          
+            {{/if}}
+          </span>
+          <span class='nav-middle'>
+            {{#if nav_middle}}
+              {{#if nav_middle_link}}
+                <a href="{{nav_middle_link}}">{{{nav_middle}}}</a>
+              {{else}}
+                {{{nav_middle}}}
+              {{/if}}          
+            {{/if}}
+          </span>
+          <span class='nav-next'>
+            {{#if nav_next}}
+              {{#if nav_next_link}}
+                <a href="{{nav_next_link}}">{{{nav_next}}}</a>
+              {{else}}
+                {{{nav_next}}}
+              {{/if}}          
+            {{/if}}
+          </span>
+        </div>
+      </div>
+      {{#each article}}
+        <div class="page">
+          <div class='article'>
+            <div class='article-header'>
+              <div class='author_pic'>
+                {{#if author_img_src}}
+                  {{#if author_link}}
+                    <a href="{{author_link}}"><img src="{{author_img_src}}"></a>
+                  {{else}}
+                    <img src="{{author_img_src}}">
+                  {{/if}}
+                {{/if}}
+              </div>
+              <div class='author'>
+                {{#if author_link}}
+                  <a href="{{author_link}}">{{{author}}}</a>
+                {{else}}
+                  {{{author}}}
+                {{/if}}
+              </div>
+              <h1 class='title'>
+                {{#if title_link}}
+                  <a href="{{title_link}}">{{{title}}}</a>
+                {{else}}
+                  {{title}}
+                {{/if}}
+              </h1>
+              <div class='date'>{{date}}</div>
+            </div>
+            <div class='article-body'>{{{body}}}</div>
+            <div class='article-comments'>
+              <span class='comments'>
+                {{#if comments}}
+                  {{#if comments_link}}
+                    <a href="{{comments_link}}">{{{comments}}}</a>
+                  {{else}}
+                    {{{comments}}}
+                  {{/if}}          
+                {{/if}}
+              </span>
+              <span class='new-comment'>
+                {{#if new_comment}}
+                  {{#if new_comment_link}}
+                    <a href="{{new_comment_link}}">{{{new_comment}}}</a>
+                  {{else}}
+                    {{{new_comment}}}
+                  {{/if}}          
+                {{/if}}
+              </span>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+        <div class="page">
+          <div class='nav'>
+            <span class='nav-prev'>
+              {{#if nav_prev}}
+                {{#if nav_prev_link}}
+                  <a href="{{nav_prev_link}}">{{{nav_prev}}}</a>
+                {{else}}
+                  {{{nav_prev}}}
+                {{/if}}          
+              {{/if}}
+            </span>
+            <span class='nav-middle'>
+              {{#if nav_middle}}
+                {{#if nav_middle_link}}
+                  <a href="{{nav_middle_link}}">{{{nav_middle}}}</a>
+                {{else}}
+                  {{{nav_middle}}}
+                {{/if}}          
+              {{/if}}
+            </span>
+            <span class='nav-next'>
+              {{#if nav_next}}
+                {{#if nav_next_link}}
+                  <a href="{{nav_next_link}}">{{{nav_next}}}</a>
+                {{else}}
+                  {{{nav_next}}}
+                {{/if}}          
+              {{/if}}
+            </span>
+          </div>
+        </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

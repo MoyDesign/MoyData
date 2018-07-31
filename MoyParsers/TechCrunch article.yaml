@@ -1,0 +1,34 @@
+info:
+  name: TechCrunch article
+  description: Parses a single TechCrunch article.
+  author: Moy.Design
+  type: article
+  domain: techcrunch.com
+  path: '/\d+/\d+/\d+/.*'
+  testPages: 'https://techcrunch.com/2018/06/28/in-london-uber-has-won-the-battle-but-risks-losing-the-war/'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://s0.wp.com/wp-content/themes/vip/techcrunch-2013/assets/images/homescreen_TCIcon_ipad.png"
+
+  - name: title
+    match: "h1"
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+  
+  - name: date
+    match:
+      include: "meta[name='sailthru.date']"
+      attribute: content
+  
+  - name: author
+    match: "div.article__byline a"
+
+  - name: body
+    match: 
+      include: ".article__featured-image-wrapper, .article-content"
+      removeInside: [".article__contributor-byline", "img.article__featured-image"]
+      keepBasicMarkup: true

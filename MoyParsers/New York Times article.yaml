@@ -1,0 +1,36 @@
+info:
+  name: New York Times article
+  description: Parses a single New York times post page, like a piece of news or an article.
+  author: Moy.Design
+  type: article
+  domain: nytimes.com
+  path: '/\d+/\d+/\d+/.*'
+  testPages: 'https://www.nytimes.com/2018/06/27/us/politics/anthony-kennedy-retire-supreme-court.html'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://static01.nyt.com/images/icons/t_logo_291_black.png"
+
+  - name: title
+    match: "h1[itemprop='headline']"
+
+  - name: date
+    match: "header time:last"
+  
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: author
+    match: "p[itemprop='author creator'] a"
+
+  - name: author_link
+    match:
+      include: "p[itemprop='author creator'] a"
+      attribute: href
+
+  - name: body
+    match: 
+      include: "div.StoryBodyCompanionColumn, figure"
+      keepBasicMarkup: true

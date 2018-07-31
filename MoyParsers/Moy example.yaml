@@ -1,0 +1,20 @@
+info:
+  name: Moy example
+  description: "Example parser from the 'Get started' guide. Parses https://moy.design/example/lorem-ipsum.html"
+  author: Moy.Design
+  type: article
+  domain: moy.design
+  path: 'example/lorem-ipsum\.html'
+  testPages: 'https://moy.design/example/lorem-ipsum.html'
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://moy.design/favicon-96x96.png"
+
+  - name: title
+    match: h1
+
+  - name: body
+    match: 
+      include: .article
+      keepBasicMarkup: true

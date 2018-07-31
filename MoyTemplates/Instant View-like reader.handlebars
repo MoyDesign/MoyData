@@ -1,0 +1,569 @@
+{{!--
+name: Instant View-like reader
+type: article
+author: Moy.Design
+description: Clean black-on-white template based on the Telegram's Instant View design.
+--}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="{{ BASE_URL }}">
+    <title>{{ TITLE }}</title>
+    {{{ ICON_TAGS }}}
+    {{{ OPEN_GRAPH_TAGS }}}
+    <style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-size: 17px;
+  line-height: 25px;
+  padding: 0;
+  margin: 0;
+}
+article {
+  padding-bottom: 12px;
+  padding-left: 3px;
+  padding-right: 3px;
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+}
+@media only screen and (min-width: 720px) {
+  article {
+    width: 720px;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: initial;
+  }
+} 
+article h1,
+article h2 {
+  font-family: 'Georgia';
+  font-size: 28px;
+  line-height: 31px;
+  margin: 21px 18px 12px;
+  font-weight: normal;
+}
+article h2 {
+  font-size: 24px;
+  line-height: 30px;
+  margin: -6px 18px 12px;
+  color: #777;
+}
+article address {
+  font-size: 15px;
+  color: #79828B;
+  margin: 12px 18px 21px;
+  font-style: normal;
+}
+article address figure {
+  width: 25px;
+  height: 25px;
+  float: right;
+  margin: 0 0 0 12px;
+  background: no-repeat center;
+  background-size: cover;
+  border-radius: 50%;
+}
+article address a,
+article address a[href] {
+  color: #79828B;
+}
+article a[href] {
+  color: #007EE5;
+  text-decoration: none;
+}
+article code {
+  font-size: 0.94em;
+  background: #eee;
+  border-radius: 2px;
+  padding: 1px 3px;
+}
+article p {
+  margin: 0 18px 12px;
+  word-wrap: break-word;
+}
+article pre,
+article pre.hljs {
+  font-family: Menlo;
+  margin: 14px 0;
+  padding: 7px 18px;
+  background: #F5F8FC;
+  font-size: 16px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: visible;
+  position: relative;
+}
+article pre[data-language]:before {
+  color: #ddd;
+  font-size: 11px;
+  line-height: 17px;
+  content: 'language="' attr(data-language) '"';
+  display: block;
+  position: absolute;
+  right: 3px;
+  top: 0;
+}
+article pre + pre {
+  margin-top: -14px;
+}
+article h3,
+article h4 {
+  font-family: 'Georgia';
+  font-size: 24px;
+  line-height: 30px;
+  margin: 18px 18px 9px;
+  font-weight: normal;
+}
+article h4 {
+  font-size: 19px;
+  margin: 18px 18px 7px;
+}
+article blockquote {
+  font-family: 'Georgia';
+  margin: 18px 18px 16px;
+  padding-left: 22px;
+  position: relative;
+  font-style: italic;
+  word-wrap: break-word;
+}
+article blockquote:before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 3px;
+  bottom: 3px;
+  width: 3px;
+  background-color: #000;
+  border-radius: 3px;
+}
+article aside {
+  font-family: 'Georgia';
+  margin: 18px 18px 16px;
+  padding: 0 18px;
+  text-align: center;
+  font-style: italic;
+}
+article blockquote cite,
+article aside cite,
+article footer cite {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  display: block;
+  color: #79828B;
+  line-height: 19px;
+  padding: 5px 0 2px;
+  font-style: normal;
+}
+article hr {
+  width: 50%;
+  margin: 36px auto;
+  padding: 2px 0 0;
+  border: none;
+}
+article hr:before {
+  content: '';
+  display: block;
+  border-top: 1px solid #c9cdd1;
+  padding: 0 0 2px;
+}
+article footer hr {
+  margin: 18px auto 16px;
+}
+article ul {
+  margin: 18px;
+  padding-left: 16px;
+  list-style: none;
+}
+article ul li {
+  padding-left: 6px;
+  position: relative;
+}
+article ul li:before {
+  content: '\2022';
+  position: absolute;
+  display: block;
+  font-size: 163%;
+  left: -19px;
+  top: 1px;
+}
+article ol {
+  margin: 18px;
+  padding-left: 18px;
+}
+article ol li {
+  padding-left: 4px;
+}
+
+img, video, iframe {
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
+  vertical-align: top;
+}
+iframe {
+  height: 56.25vw;
+}
+@media only screen and (min-width: 720px) {
+  img, video, iframe {
+    width: initial;
+    position: initial;
+    left: initial;
+    max-width: 100%;
+    vertical-align: top;
+  }
+  iframe {
+    width: 640px;
+    height: 360px;
+  }
+} 
+audio {
+  width: 100%;
+  vertical-align: top;
+}
+img {
+  font-size: 12px;
+  color: #999;
+}
+.iframe-wrap {
+  max-width: 100%;
+  vertical-align: top;
+  display: inline-block;
+  position: relative;
+}
+.iframe-wrap iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+figure {
+  margin: 0 0 16px;
+  padding: 0;
+  text-align: center;
+}
+figure.nowide {
+  margin-left: 18px;
+  margin-right: 18px;
+}
+figure.nowide figcaption {
+  padding-left: 0;
+  padding-right: 0;
+}
+figure > figure {
+  margin: 0;
+}
+figcaption {
+  font-size: 15px;
+  color: #79828B;
+  padding: 6px 18px 0;
+  line-height: 19px;
+  text-align: left;
+}
+footer {
+  margin: 12px 18px;
+  color: #79828B;
+}
+
+figure.slideshow {
+  position: relative;
+  white-space: nowrap;
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+}
+figure.slideshow > figure {
+  position: static !important;
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+  transition: margin-left .3s;
+}
+figure.slideshow > figure figcaption {
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  text-shadow: 1px 1px 7px rgba(0,0,0,.4), -1px 1px 7px rgba(0,0,0,.4), 1px -1px 7px rgba(0,0,0,.4), -1px -1px 7px rgba(0,0,0,.4);
+  padding-bottom: 5px;
+  display: block;
+  display: -webkit-box;
+  max-height: 69px;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+}
+figure.slideshow + .buttons {
+  position: absolute;
+  width: 100%;
+  margin-top: -40px;
+  white-space: nowrap;
+}
+figure.slideshow + .buttons label {
+  display: inline-block;
+  padding: 5px 7px;
+  line-height: 5px;
+  cursor: pointer;
+}
+figure.slideshow + .buttons input {
+  position: absolute;
+  left: -10000px;
+}
+figure.slideshow + .buttons label i {
+  display: inline-block;
+  background: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .4);
+  border-radius: 4px;
+  width: 7px;
+  height: 7px;
+  opacity: .6;
+  transition: opacity .3s;
+}
+figure.slideshow + .buttons input:checked ~ i {
+  opacity: 1;
+}
+
+figure.collage {
+  margin: -2px 16px;
+  text-align: left;
+}
+figure.collage > figure {
+  display: inline-block;
+  width: 25%;
+  padding: 2px;
+  box-sizing: border-box;
+}
+figure.collage > figure > i {
+  background: no-repeat center;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  padding-top: 100%;
+}
+
+figure blockquote.embed-post {
+  text-align: left;
+  margin-bottom: 0;
+}
+blockquote.embed-post address {
+  margin: 0;
+  padding: 5px 0 9px;
+  overflow: hidden;
+}
+blockquote.embed-post address figure {
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin: 0 12px 0 0;
+  background: no-repeat center;
+  background-size: cover;
+  border-radius: 50%;
+}
+blockquote.embed-post address a {
+  display: inline-block;
+  padding-top: 2px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #000;
+}
+blockquote.embed-post address time {
+  display: block;
+  line-height: 19px;
+}
+blockquote.embed-post p,
+blockquote.embed-post blockquote {
+  margin: 0 0 7px;
+  clear: left;
+}
+blockquote.embed-post figcaption {
+  padding-left: 0;
+  padding-right: 0;
+}
+blockquote.embed-post figure.collage {
+  margin-left: -2px;
+  margin-right: -2px;
+}
+blockquote.embed-post footer {
+  margin: 12px 0 0;
+  font-style: normal;
+}
+blockquote.embed-post footer hr {
+  display: none;
+}
+
+section.embed-post {
+  display: block;
+  width: auto;
+  height: auto;
+  background: #f7f7f7;
+  margin: 0 18px 12px;
+  padding: 24px 18px;
+  text-align: center;
+}
+section.embed-post strong {
+  font-size: 21px;
+  font-weight: normal;
+  display: block;
+  color: #777;
+}
+section.embed-post small {
+  display: block;
+  color: #777;
+}
+
+section.message {
+  position: absolute;
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+section.message > aside {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: #999;
+  font-size: 24px;
+  pointer-events: none;
+}
+section.message > aside > cite {
+  display: block;
+  font-size: 14px;
+  padding: 10px 0 0;
+  font-style: normal;
+  color: #ccc;
+}
+
+section.channel {
+  margin-top: -16px;
+  margin-bottom: -9px;
+}
+section.channel:first-child {
+  margin-top: 0;
+}
+section.channel > a {
+  display: block;
+  padding: 7px 18px;
+  background: #f7f7f7;
+}
+section.channel > a:before {
+  content: 'Join';
+  color: #3196e8;
+  font-weight: 500;
+  margin-left: 7px;
+  float: right;
+}
+section.channel > a > h4 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-size: 17px;
+  line-height: 26px;
+  font-weight: 500;
+  margin: 0;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}    
+.comment[indent]     {margin-left: 240px;}
+.comment[indent='0'], .comment[indent='1'] {margin-left: 0;}
+.comment[indent='2'] {margin-left: 30px;}
+.comment[indent='3'] {margin-left: 60px;}
+.comment[indent='4'] {margin-left: 90px;}
+.comment[indent='5'] {margin-left: 120px;}
+.comment[indent='6'] {margin-left: 150px;}
+.comment[indent='7'] {margin-left: 180px;}
+.comment[indent='8'] {margin-left: 210px;}
+.comment[indent='9'] {margin-left: 240px;}
+.comment address {
+  background-color: #eee;
+  margin: 0;
+  padding: 3px 6px;
+}
+.comment address a[href] {
+  font-weight: bold;
+  color: #007EE5;
+}
+.comment address time {
+  color: #79828B;
+  font-weight: normal;
+}
+.folded-comment {
+  color: #79828B;
+  font-weight: normal;
+  font-size: smaller;
+}
+.comment address {
+  margin-top: 18px;
+}
+.comment.folded + .comment.folded::after {
+  content: "...";
+  color: #79828B;
+  font-weight: normal;
+  font-size: smaller;
+}
+.comment.folded + .comment.folded + .comment.folded {
+  display: none;
+}
+    </style>
+  </head>
+  <body>
+    <article>
+      {{#if article_img_src}}
+        <figure>
+          <figure><img alt="{{article_img_src}}" src="{{article_img_src}}"/></figure>
+        </figure>
+      {{/if}}
+      <h1>{{{title}}}</h1>
+      <address>
+        {{#if author_link}}
+          <a href="{{author_link}}">{{{author}}}</a>
+        {{else if author}}
+          {{{author}}}
+        {{/if}}
+        <time> &#8226; {{{date}}}</time>
+      </address>
+      {{{body}}}
+
+      {{#if comment}}
+         <hr>
+      {{/if}}
+      {{#each comment}}
+        <div class='comment {{#unless body}}folded{{/unless}}'
+          {{#if level}}
+            indent='{{level}}'
+          {{else if indent}}
+            style='margin-left: {{indent}}'
+          {{/if}}
+        >
+        {{#if body}}
+          <address>
+            {{#if author_link}}
+              <a href="{{author_link}}">{{{author}}}</a>
+            {{else if author}}
+              {{{author}}}
+            {{/if}}
+            <time> &#8226; {{{date}}}</time>
+          </address>
+          <div class='comment-body'>{{{body}}}</div>
+        {{else}}
+          <div class='folded-comment'>
+            {{#if ../folded_comment_text}}
+              {{{../folded_comment_text}}}
+            {{else}}
+              (comment folded)
+            {{/if}}
+          </div>
+        {{/if}}
+        </div>
+      {{/each}}
+
+    </article>
+  </body>
+</html>

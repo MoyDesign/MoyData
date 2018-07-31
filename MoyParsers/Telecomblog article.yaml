@@ -1,0 +1,29 @@
+info:
+  name: Telecomblog article
+  description: Parses a single Telecomblog.ru article.
+  author: Moy.Design
+  type: article
+  domain: telecomblog.ru
+  path: '[^/]+/.+'
+  testPages: 'http://telecomblog.ru/delovie-novosti/evroset-podula-v-alkotester'
+
+rules:
+  - name: logo_small_img_src
+    value: "http://telecomblog.ru/favicon.ico"
+
+  - name: title
+    match: h1.itemTitle
+
+  - name: date
+    match: span.itemDateCreated
+
+  - name: author
+    match:
+      include: "meta[name='author']"
+      attribute: content
+
+  - name: body
+    match: 
+      include: div.itemBody
+      removeInside: [".item_infor", "span.itemAuthor"]
+      keepBasicMarkup: true

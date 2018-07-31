@@ -1,0 +1,42 @@
+info:
+  name: Popular Mechanics article
+  description: Parses a single post in the Popular Mechanics magazine, like a piece of news or an article.
+  author: Moy.Design
+  type: article
+  domain: popmech.ru
+  path: '[^/]+/.+'
+  testPages:
+    - 'https://www.popmech.ru/vehicles/268062-10-samykh-redkikh-avtomobiley-porsche/'
+    - 'https://www.popmech.ru/adrenalin/17168-unikalnye-bolidy-dlya-traktor-pullinga/'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://www.popmech.ru/resources/i/small-logo4.svg"
+
+  - name: title
+    match: 
+      or:
+        - "h1[itemprop='headline']"
+        - .wrapper h1
+
+  - name: date
+    match: ".article-actions .date time[itemprop='datePublished']:first"
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+  
+  - name: author
+    match: ".article-actions div.author div.name:first"
+
+  - name: author_img_src
+    match:
+      include: .article-actions div.author div.image img
+      attribute: src
+
+  - name: body
+    match: 
+      include: "div.lead, div[itemprop='articleBody']"
+      keepBasicMarkup: true
+      removeInside: .article-actions

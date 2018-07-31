@@ -1,0 +1,182 @@
+info:
+  name: LiveJournal article
+  description: Parses a single LiveJournal post page. Supports various post styles and layouts. 
+    Also should work for standalone domains based on LJ like varlamov.ru.
+  author: Moy.Design
+  type: article
+  domain: livejournal.com
+  path: '([^/]+/)?[0-9]*\.html'
+  testPages:
+    - 'https://zelenyikot.livejournal.com/131423.html'
+    - 'https://evo-lutio.livejournal.com/704259.html'
+
+redirect:
+  query:
+    setParams:
+      nojs: 1
+
+rules: 
+  - name: logo_small_img_src
+    value: "http://l-stat.livejournal.net/img/apple-touch-icon.png?v=14991"
+
+  - name: author_img_src
+    match: 
+      or:
+        - include: ".vcard dt img"
+          attribute: src
+
+        - include: ".asset-body .user-icon img:not(.i-ljuser-userhead)"
+          attribute: src
+
+        - include: ".userpicfriends img"
+          attribute: src
+
+        - include: ".j-e-user-pic img"
+          attribute: src
+
+        - include: ".aentry-head__userpic-img img"
+          attribute: src
+
+        - include: ".s2-entrytext .Picture img"
+          attribute: src
+
+        - include: "#profile .profile-userpic"
+          attribute: src
+
+  - name: author
+    match: 
+      or: 
+        - .vcard .username
+        - .profile-username a.i-ljuser-username
+        - .b-singlepost-author-user-screen .ljuser
+        - include: .userpicfriends a
+          outerNode: true
+        - .aentry-head__username a.i-ljuser-username b
+        - .s-header-extra__user .i-ljuser-username b
+
+  - name: author_link
+    match: 
+      or: 
+        - include: ".vcard .username a.i-ljuser-username"
+          attribute: href
+
+        - include: ".profile-username a.i-ljuser-username"
+          attribute: href
+
+        - include: ".b-singlepost-author-user-screen .ljuser a"
+          attribute: href
+
+        - include: ".userpicfriends a"
+          attribute: href
+
+        - include: ".aentry-head__username a.i-ljuser-username"
+          attribute: href
+
+        - include: ".s-header-extra__user .i-ljuser-username"
+          attribute: href
+
+  - name: date
+    match:
+      or: 
+        - .vcard .updated
+        - .asset-entry-date .datetime
+        - .b-singlepost-author-userinfo-screen .b-singlepost-author-date
+        - .datesubject .date
+        - .j-e-date-day
+        - .aentry-head__date time
+        - include: "#content h2"
+          exclude: "#comments"
+        - .entryHeaderDate
+
+  - name: title
+    match:
+      or:
+        - include: .entry-title
+          exclude: .entry-linkbar
+          removeInside: .entry-rating
+        - .asset-name
+        - .header-level4
+        - .j-e-title
+        - .datesubject .subject
+        - .aentry-post__title-text
+        - .s2-entrytext h3 span em
+        - .body-title
+
+  - name: body
+    match: 
+      or:
+        - include: .entry-content
+          keepBasicMarkup: true
+
+        - include: .asset-body
+          keepBasicMarkup: true
+          removeInside: '.user-icon'
+
+        - include: .WYSIWYG
+          keepBasicMarkup: true
+
+        - include: .j-e-text
+          keepBasicMarkup: true
+
+        - include: .entry_text
+          keepBasicMarkup: true
+
+        - include: .aentry-post__text
+          keepBasicMarkup: true
+
+        - include: .s2-entrytext p
+          keepBasicMarkup: true
+
+        - include: .entryText
+          keepBasicMarkup: true
+
+  - name: comments_title
+    value: "Комментарии"
+
+  - name: folded_comment_text
+    value: "(комментарий скрыт)"
+
+  - name: comment
+    match:
+      or: ['.b-tree-twig', '.comment-wrap']
+    rules:
+      - name: indent
+        attribute: style
+        rewrite:
+          find: 'margin-left:\s*([0-9.-]+[a-z%]*)'
+          output: '$1'
+
+      - name: author_img_src
+        match:
+          or: 
+            - include: .b-leaf-userpic img
+              attribute: src
+            - include: .comment-upic img
+              attribute: src
+
+      - name: author_link
+        match:
+          or:
+            - include: a.b-leaf-userpic-inner
+              attribute: href
+            - include: .comment-poster-info a.i-ljuser-username
+              attribute: href
+
+      - name: author
+        match:
+          or:
+            - include: a.b-leaf-userpic-inner
+              attribute: "lj:user"
+            - .comment-poster-info a.i-ljuser-username
+
+      - name: date
+        match: 
+          or: ['span.b-leaf-createdtime', 'span.comment-datetimelink']
+
+      - name: body
+        match:
+          or:
+            - include: .b-leaf-article
+              keepBasicMarkup: true
+            - include: .comment-text
+              keepBasicMarkup: true

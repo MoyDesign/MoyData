@@ -1,0 +1,42 @@
+info:
+  name: Oper.Ru feed
+  description: Parses the main page feed of http://oper.ru site, as well as the category feeds.
+  author: Moy.Design
+  type: feed
+  domain: oper.ru
+  path: '/?(\?page\=[0-9]*)?'
+  testPages: 'https://oper.ru/'
+
+rules:
+  - name: logo_small_img_src
+    value: "http://oper.ru/static/apple-touch-icon.png"
+
+  - name: article
+    match:
+      include: dt
+      exclude: .banner
+      addNextUntil: "dt, .banner"
+    rules:
+      - name: author
+        match: 
+          include: "dd > table p.meta"
+          keepBasicMarkup: true
+
+      - name: title
+        match: "dt a"
+
+      - name: title_link
+        match: 
+          include: "dt a"
+          attribute: href
+
+      - name: body
+        match: 
+          include: "dd .body"
+          keepBasicMarkup: true
+
+  - name: nav_middle
+    match: 
+      include: .categories
+      keepBasicMarkup: true
+ 

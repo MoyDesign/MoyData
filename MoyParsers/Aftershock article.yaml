@@ -1,0 +1,69 @@
+info:
+  name: Aftershock article
+  description: Parses a single Aftershock article.
+  author: Moy.Design
+  type: article
+  domain: aftershock.news
+  path: '\?q=node/\d+'
+  testPages: 'https://aftershock.news/?q=node/659962'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://aftershock.news/sites/all/themes/AsLoD/images/ash.png"
+
+  - name: title
+    match: h1.aft-postheader span.aft-postheadericon
+
+  - name: date
+    match: "span.aft-postdateicon span"
+  
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']:first"
+      attribute: content
+  
+  - name: author_link
+    match: 
+      include: "span.aft-postauthoricon a"
+      attribute: href
+
+  - name: author
+    match: "span.aft-postauthoricon span"
+
+  - name: author_img_src
+    match: 
+      include: "div.aft-article div.user-picture img"
+      attribute: src
+
+  - name: body
+    match: 
+      include: "div.aft-article"
+      removeInside: ["div.user-picture", ".field-name-field-teaser-image img"]
+      keepBasicMarkup: true
+
+  - name: comments_title
+    value: "<h1>Комментарии</h1>"
+
+  - name: comment
+    match: div.aft-comment
+    rules:
+      - name: author
+        match: "a.username"
+
+      - name: author_link
+        match: 
+          include: "a.username"
+          attribute: href
+
+      - name: author_img_src
+        match: 
+          include: "div.user-picture img"
+          attribute: src
+
+      - name: body
+        match: 
+          include: "div.field-name-comment-body"
+          keepBasicMarkup: true
+
+      - name: date
+        match: "span.comment_date"

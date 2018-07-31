@@ -1,0 +1,80 @@
+info:
+  name: LiveJournal feed
+  description: Parses LiveJournal feed.
+  author: Moy.Design
+  type: article
+  domain: livejournal.com
+  path: 'feed/'
+
+redirect:
+  query:
+    setParams:
+      nojs: 1
+
+rules:
+  - name: logo_small_img_src
+    value: "http://l-stat.livejournal.net/img/apple-touch-icon.png?v=14991"
+
+  - name: nav_prev_link
+    match:
+      include: "a.b-pager-link--prev"
+      attribute: href
+
+  - name: nav_prev
+    match: ".b-pager-prev .b-pager-link-text"
+
+  - name: nav_next_link
+    match: 
+      include: "a.b-pager-link--next"
+      attribute: href
+
+  - name: nav_next
+    match: ".b-pager-next .b-pager-link-text"
+
+  - name: article
+    match: article
+    rules:
+      - name: author_img_src
+        match: 
+          include: ".entryunit__userpic img"
+          attribute: src
+
+      - name: author
+        match: ".entryunit__author a.i-ljuser-username"
+
+      - name: author_link
+        match: 
+          include: ".entryunit__author a.i-ljuser-username"
+          attribute: href
+
+      - name: title
+        match: ".entryunit__title a"
+
+      - name: title_link
+        match: 
+          include: ".entryunit__title a"
+          attribute: href
+
+      - name: body
+        match: 
+          include: .entryunit__text
+          keepBasicMarkup: true
+
+      - name: date
+        match: .entryunit__date
+
+      - name: comments
+        value: "Comments"
+
+      - name: comments_link
+        match: 
+          include: .actions-entryunit__item--comments a
+          attribute: href
+
+      - name: new_comment
+        match: .actions-entryunit__item--reply
+
+      - name: new_comment_link
+        match: 
+          include: .actions-entryunit__item--reply a
+          attribute: href

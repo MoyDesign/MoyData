@@ -1,0 +1,34 @@
+info:
+  name: Vz.ru article
+  description: Parses a single Vz.ru article.
+  author: Moy.Design
+  type: article
+  domain: vz.ru
+  path: '.+\d+\.html(\?.*)?'
+  testPages: 'https://vz.ru/politics/2018/6/29/930047.html'
+
+rules:
+  - name: logo_small_img_src
+    value: "http://vz.ru/apple-touch-icon.png"
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: article_img_src
+    match:
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: date
+    match:
+      include: ".rel td.extra"
+      keepBasicMarkup: true
+      removeInside: ["p", "div"]
+
+  - name: body
+    match: 
+      include: ".text.newtext"
+      removeInside: div
+      keepBasicMarkup: true

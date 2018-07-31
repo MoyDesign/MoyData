@@ -1,0 +1,47 @@
+info:
+  name: Oper.Ru article
+  description: Parses a single article/post from the oper.ru website.
+  author: Moy.Design
+  type: article
+  domain: oper.ru
+  path: '.*/read\.php\?t=[0-9]*'
+  testPages: 'https://oper.ru/news/read.php?t=1051620764'
+
+rules: 
+  - name: logo_small_img_src
+    value: "http://oper.ru/static/apple-touch-icon.png"
+
+  - name: date
+    match: 
+      include: p.meta
+      exclude: "td[align='right'] p.meta"
+      keepBasicMarkup: true
+
+  - name: title
+    match:
+      include: h1
+      exclude: .timeline-Header-title
+
+  - name: body
+    match:
+      include: .body
+      keepBasicMarkup: true
+
+  - name: comments_title
+    value: "<h1>Комментарии</h1>"
+
+  - name: comment
+    match: table.comment
+    rules:
+      - name: author
+        match: 
+          include: "td[width='15%'] font"
+          keepBasicMarkup: true
+
+      - name: body
+        match: 
+          include: "td[width='85%'] font div"
+          keepBasicMarkup: true
+
+      - name: date
+        match: "td[width='85%'] span.posted"

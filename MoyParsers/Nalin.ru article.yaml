@@ -1,0 +1,41 @@
+info:
+  name: Nalin.ru article
+  description: Parses a single nalin.ru article.
+  author: Moy.Design
+  type: article
+  domain: nalin.ru
+  path: '/[^/]+'
+  testPages: 'https://www.nalin.ru/plan-merkel-ot-kotorogo-sodrogaetsya-evropa-6595'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://www.nalin.ru/favicon.ico"
+
+  - name: title
+    match: "h1[itemprop='name']"
+
+  - name: date
+    match: "div.article-meta div.date"
+  
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+  
+  - name: author
+    match: "h2.author-name"
+
+  - name: author_link
+    match: 
+      include: "h2.author-name a"
+      attribute: href
+
+  - name: author_img_src
+    match: 
+      include: "div.author-face img"
+      attribute: src
+
+  - name: body
+    match: 
+      include: "div.content"
+      keepBasicMarkup: true

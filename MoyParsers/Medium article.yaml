@@ -1,0 +1,52 @@
+info:
+  name: Medium article
+  description: Parses a single Medium article.
+  author: Moy.Design
+  type: article
+  domain: medium.com
+  path: '[^/]+/.+'
+  testPages: 'https://medium.com/the-mission/if-you-only-read-a-few-books-in-2018-read-these-89d03fc149c6'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://medium.com/favicon.ico"
+
+  - name: title
+    match: 
+      or:
+        - .elevateCover h1
+        - h1.graf--title
+
+  - name: date
+    match:
+      or:
+        - .elevateCover time
+        - .ui-caption.postMetaInline time
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+  
+  - name: author
+    match: ".u-flex1 a[data-action='show-user-card']"
+
+  - name: author_link
+    match: 
+      include: ".postMetaLockup--authorWithBio .u-flex1 a[data-action='show-user-card']"
+      attribute: href
+
+  - name: author_img_src
+    match: 
+      include: ".postMetaLockup--authorWithBio .u-flex0 a[data-action='show-user-card'] img"
+      attribute: src
+
+  - name: body
+    match: 
+      include: "div.section-inner, div.section-divider"
+      removeInside:
+        - .progressiveMedia-thumbnail
+        - h1.graf--title
+        - .graf--figure.graf--leading
+      keepBasicMarkup: true
+

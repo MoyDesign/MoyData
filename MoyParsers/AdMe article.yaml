@@ -1,0 +1,29 @@
+info:
+  name: AdMe article
+  description: Parses a single AdMe.ru article.
+  author: Moy.Design
+  type: article
+  domain: adme.ru
+  path: '/[^/]+/[^/]+.*'
+  testPages: 'https://www.adme.ru/svoboda-avtorskie-kolonki/16-izvestnyh-lyudej-kotorye-ostavili-svoih-detej-bez-nasledstva-1817465/'
+
+rules:
+  - name: logo_small_img_src
+    value: "http://iface.adme.ru/@/AdMe/Layouts/i/apple-icon.png"
+
+  - name: title
+    match: "h1"
+
+  - name: date
+    match: "li.al-stats-date"
+  
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+  
+  - name: body
+    match: 
+      include: "article"
+      keepBasicMarkup: true
+      removeInside: ["h1", "#js-article-share-top", "img.webfeedsFeaturedVisual"]

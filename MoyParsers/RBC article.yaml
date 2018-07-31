@@ -1,0 +1,28 @@
+info:
+  name: RBC article
+  description: Parses a single RBC article.
+  author: Moy.Design
+  type: article
+  domain: rbc.ru
+  path: '[^/]+/[^/]+/[^/]+/[^/]+/[0-9a-f]+'
+  testPages: 'https://nsk.rbc.ru/nsk/29/06/2018/5b35959e9a79478fda8b172c?from=main'
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://s.rbk.ru/v8_top_static/rbc7-8.5.95/styles/blocks/g-logo-rbc/images/rbc.svg"
+
+  - name: author
+    match:
+      include: .article__authors
+      removeInside: .article__authors__name 
+
+  - name: date
+    match: .article__header__date
+
+  - name: title
+    match: .js-slide-title
+
+  - name: body
+    match: 
+      include: .article__text
+      keepBasicMarkup: true

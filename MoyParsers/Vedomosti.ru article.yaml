@@ -1,0 +1,37 @@
+info:
+  name: Vedomosti.ru article
+  description: Parses a single Vedomosti.ru post page, like a piece of news or an article.
+  author: Moy.Design
+  type: article
+  domain: vedomosti.ru
+  path: '/[^/]+/[^/]+/.*'
+  testPages: 'https://www.vedomosti.ru/economics/articles/2018/06/29/774140-veb-otkazatsya-ot-ubitochnih-proektah'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://www.vedomosti.ru/assets/vedomosti_180x180.png"
+
+  - name: title
+    match: h1.title
+
+  - name: subtitle
+    match: .subtitle
+
+  - name: date
+    match: ".pubdate a:not(.link)"
+
+  - name: author
+    match:
+      include: ".b-document__authors ul li a"
+      exclude: ".b-document__authority"
+
+  - name: article_img_src
+    match:
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match: 
+      include: .b-document__body
+      removeInside: .no-print
+      keepBasicMarkup: true

@@ -1,0 +1,30 @@
+info:
+  name: Eurasia Daily article
+  description: Parses a single article of Eurasia Daily (EADaily).
+  author: Moy.Design
+  type: article
+  domain: eadaily.com
+  path: '/[^/]+(/[^/]+){2,}'
+  testPages: 'https://eadaily.com/ru/news/2018/07/15/franciya-stala-chempionom-mira-po-futbolu'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://eadaily.com/favicon.ico"
+
+  - name: title
+    match: "h1[itemprop='headline']"
+
+  - name: date
+    match: 
+      include: "time[itemprop='datePublished']"
+      keepBasicMarkup: true
+  
+  - name: article_img_src
+    match:
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match: 
+      include: "div[itemprop='articleBody']"
+      keepBasicMarkup: true

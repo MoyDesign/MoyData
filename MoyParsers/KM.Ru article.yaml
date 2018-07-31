@@ -1,0 +1,31 @@
+info:
+  name: KM.Ru article
+  description: Parses a single article of KM.Ru.
+  author: Moy.Design
+  type: article
+  domain: km.ru
+  path: '/[^/]+(/[^/]+){2,}'
+  testPages: 'http://www.km.ru/zdorove/2015/07/15/zdorove/761523-optimalnoe-pitanie-ofisnykh-sotrudnikov'
+
+rules:
+  - name: logo_small_img_src
+    value: "http://www.km.ru/favicon.ico"
+
+  - name: title
+    match: ".content h1"
+
+  - name: author
+    match: ".authoring_info span.author a"
+
+  - name: author_link
+    match:
+      include: ".authoring_info span.author a"
+      attribute: href
+
+  - name: date
+    match: ".authoring_info span.date, .authoring_info span.time"
+  
+  - name: body
+    match: 
+      include: ".content .text"
+      keepBasicMarkup: true

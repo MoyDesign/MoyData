@@ -1,0 +1,40 @@
+info:
+  name: Vc.ru article
+  description: Parses a single Vc.ru article.
+  author: Moy.Design
+  type: article
+  domain: vc.ru
+  path: '/[0-9]+-.+'
+  testPages: 'https://vc.ru/41047-the-information-apple-planiruet-zapustit-edinuyu-podpisku-na-svoi-servisy'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://vc.ru/favicon.ico"
+
+  - name: title
+    match: .entry_header__title
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+  
+  - name: author
+    match: .entry_header__author .entry_header__author__name
+
+  - name: author_link
+    match:
+      include: a.entry_header__author
+      attribute: href
+
+  - name: date
+    match:
+      include: "meta[property='article:published_time']"
+      attribute: content
+  
+  - name: body
+    match: 
+      include: .b-article
+      keepBasicMarkup: true
+      removeInside:
+        - .entry_content__shares

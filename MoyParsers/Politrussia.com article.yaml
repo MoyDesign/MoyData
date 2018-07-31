@@ -1,0 +1,35 @@
+info:
+  name: Politrussia.com article
+  description: Parses a single Politrussia.com post page, like a piece of news or an article.
+  author: Moy.Design
+  type: article
+  domain: politrussia.com
+  path: '[^/]+/.+'
+
+rules:
+  - name: logo_small_img_src
+    value: "http://politrussia.com/favicon-64x64.png"
+
+  - name: title
+    match: .title
+
+  - name: date
+    match: div.date
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+  
+  - name: author
+    match: a.author
+
+  - name: author_link
+    match:
+      include: a.author
+      attribute: href
+
+  - name: body
+    match:
+      include: "div.article-body, div.article-vibox"
+      keepBasicMarkup: true
