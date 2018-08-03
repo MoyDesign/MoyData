@@ -2,7 +2,7 @@ info:
   name: LiveJournal feed
   description: Parses LiveJournal feed.
   author: Moy.Design
-  type: article
+  type: feed
   domain: livejournal.com
   path: 'feed/'
 
