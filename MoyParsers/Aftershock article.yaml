@@ -42,7 +42,7 @@ rules:
       keepBasicMarkup: true
 
   - name: comments_title
-    value: "<h1>Комментарии</h1>"
+    value: "Комментарии"
 
   - name: comment
     match: div.aft-comment
