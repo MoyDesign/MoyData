@@ -43,6 +43,9 @@ rules:
         - include: "#profile .profile-userpic"
           attribute: src
 
+        - include: "div#userpic img"
+          attribute: src
+
   - name: author
     match: 
       or: 
@@ -87,6 +90,7 @@ rules:
         - include: "#content h2"
           exclude: "#comments"
         - .entryHeaderDate
+        - span.entryheading span.timestamp
 
   - name: title
     match:
@@ -101,6 +105,7 @@ rules:
         - .aentry-post__title-text
         - .s2-entrytext h3 span em
         - .body-title
+        - span.entryheading span.subject
 
   - name: body
     match: 
@@ -130,6 +135,14 @@ rules:
         - include: .entryText
           keepBasicMarkup: true
 
+        - include: div.entrytext
+          keepBasicMarkup: true
+          removeInside:
+            - span.entryheading
+            - 'div:first-child'
+            - div.lj-like
+            - div.talklinks
+
   - name: comments_title
     value: "Комментарии"
 
@@ -138,7 +151,7 @@ rules:
 
   - name: comment
     match:
-      or: ['.b-tree-twig', '.comment-wrap']
+      or: ['.b-tree-twig', '.comment-wrap', '[id^=ljcmt]']
     rules:
       - name: indent
         attribute: style
@@ -153,6 +166,8 @@ rules:
               attribute: src
             - include: .comment-upic img
               attribute: src
+            - include: '[id^=cmtbar] td:first-child img:not(.i-ljuser-userhead)'
+              attribute: src
 
       - name: author_link
         match:
@@ -161,6 +176,8 @@ rules:
               attribute: href
             - include: .comment-poster-info a.i-ljuser-username
               attribute: href
+            - include: '[id^=cmtbar] a.i-ljuser-username'
+              attribute: href
 
       - name: author
         match:
@@ -168,10 +185,14 @@ rules:
             - include: a.b-leaf-userpic-inner
               attribute: "lj:user"
             - .comment-poster-info a.i-ljuser-username
+            - '[id^=cmtbar] a.i-ljuser-username'
 
       - name: date
         match: 
-          or: ['span.b-leaf-createdtime', 'span.comment-datetimelink']
+          or:
+            - 'span.b-leaf-createdtime'
+            - 'span.comment-datetimelink'
+            - '[id^=cmtbar] span[title]'
 
       - name: body
         match:
@@ -179,4 +200,6 @@ rules:
             - include: .b-leaf-article
               keepBasicMarkup: true
             - include: .comment-text
+              keepBasicMarkup: true
+            - include: 'div:nth-of-type(2)'
               keepBasicMarkup: true
