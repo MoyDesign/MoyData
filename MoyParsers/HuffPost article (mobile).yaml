@@ -1,13 +1,10 @@
 info:
-  name: HuffPost article
-  description: Parses a single HuffPost (formerly The Huffington Post) article or a piece of news.
+  name: HuffPost article (mobile)
+  description: Parses a single HuffPost (formerly The Huffington Post) *mobile* article or a piece of news.
   author: Moy.Design
   type: article
-  domain: huffingtonpost.com
-  path: '/entry/.+'
-  testPages:
-    - 'https://www.huffingtonpost.com/entry/best-fast-food-fried-chicken_us_5b328c43e4b0cb56051ccaab?section=us_taste'
-    - 'https://www.huffingtonpost.com/entry/cottage-cheese-nutritional-benefits-yogurt_us_5b3a33cbe4b0f3c221a2e136'
+  domain: m.huffpost.com
+  path: '/[^/]+/entry/.+'
 
 rules:
   - name: logo_small_img_src
@@ -17,12 +14,12 @@ rules:
     match: h1.headline__title
 
   - name: date
-    match: "span.timestamp__date--published"
+    match: "div.timestamp__date--published"
   
   - name: article_img_src
     match: 
-      include: "meta[property='og:image']"
-      attribute: content
+      include: "div.top-media--image img.image__src"
+      attribute: src
 
   - name: author
     match: ".byline__authors a.yr-author-name"
