@@ -12,9 +12,15 @@ rules:
   - name: title
     match: h1 span.mw-headline
 
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
   - name: body
     match:
       include: article.js-mediator-article
       keepBasicMarkup: true
       removeInside:
         - 'div[class^="uni-responds"]'
+        - 'h1'
