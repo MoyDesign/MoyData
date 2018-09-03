@@ -10,7 +10,10 @@ info:
 
 rules: 
   - name: title
-    match: h1 span.mw-headline
+    match:
+      or:
+        - 'h1 span.mw-headline'
+        - '.awesome-header h1'
 
   - name: article_img_src
     match: 
@@ -19,9 +22,17 @@ rules:
 
   - name: body
     match:
-      include: article.js-mediator-article
-      keepBasicMarkup: true
-      removeInside:
-        - 'div[class^="uni-responds"]'
-        - 'h1'
-        - 'div.intro'
+      or:
+        - include: article.js-mediator-article
+          keepBasicMarkup: true
+          removeInside:
+            - 'div[class^="uni-responds"]'
+            - 'h1'
+            - 'div.intro'
+
+        - include: .content-wrapper article
+          keepBasicMarkup: true
+          removeInside:
+            - 'div[class^="uni-responds"]'
+            - 'h1'
+            - 'div.intro'
