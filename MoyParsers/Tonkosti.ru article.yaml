@@ -1,0 +1,20 @@
+info:
+  name: Tonkosti.ru article
+  description: Parser a signle article from tonkosti.ru.
+  author: Moy.Design
+  type: article
+  domain: tonkosti.ru
+  path: '.*'
+  testPages:
+    - 'https://tonkosti.ru/%D0%93%D0%BE%D0%BD%D0%BA%D0%BE%D0%BD%D0%B3'
+
+rules: 
+  - name: title
+    match: h1 span.mw-headline
+
+  - name: body
+    match:
+      include: article.js-mediator-article
+      keepBasicMarkup: true
+      removeInside:
+        - 'div[class^="uni-responds"]'
