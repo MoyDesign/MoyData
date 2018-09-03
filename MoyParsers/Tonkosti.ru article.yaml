@@ -24,3 +24,4 @@ rules:
       removeInside:
         - 'div[class^="uni-responds"]'
         - 'h1'
+        - 'div.intro'
