@@ -29,6 +29,9 @@ rules:
             - 'div[class^="uni-responds"]'
             - 'h1'
             - 'div.intro'
+            - 'div.NoCurTips'
+            - 'div.SkyscannerFormInContent'
+            - 'div.pophotels'
 
         - include: .content-wrapper article
           keepBasicMarkup: true
@@ -36,3 +39,6 @@ rules:
             - 'div[class^="uni-responds"]'
             - 'h1'
             - 'div.intro'
+            - 'div.NoCurTips'
+            - 'div.SkyscannerFormInContent'
+            - 'div.pophotels'
