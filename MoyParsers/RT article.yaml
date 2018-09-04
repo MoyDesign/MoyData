@@ -1,0 +1,30 @@
+info:
+  name: RT article
+  description: Parses a single RT (Russia Today) article or a piece of news.
+  author: Moy.Design
+  type: article
+  domain: rt.com
+  path: '/((?!trend)[^/]+/)+\d+-.+'
+  testPages:
+    - 'https://russian.rt.com/russia/news/549741-rospotrebnadzor-proverka-ryba'
+    - 'https://www.rt.com/sport/434526-scottish-club-cannabis-sponsorship/'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://www.rt.com/favicon.ico"
+
+  - name: title
+    match: h1.article__heading
+
+  - name: date
+    match: 'div.article__date time:first-child'
+  
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match: 
+      include: "div.article__summary, div.article__text"
+      keepBasicMarkup: true
