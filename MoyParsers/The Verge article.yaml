@@ -1,0 +1,39 @@
+info:
+  name: The Verge article
+  description: Parses a single The Verge article or a piece of news.
+  author: Moy.Design
+  type: article
+  domain: theverge.com
+  path: '/(\d+/){4}.+'
+  testPages:
+    - 'https://www.theverge.com/2018/9/4/17819766/instagram-shopping-app-e-commerce'
+
+rules:
+  - name: logo_small_img_src
+    match:
+      include: "link[rel='shortcut icon']"
+      attribute: href
+
+  - name: title
+    match: h1.c-page-title
+
+  - name: date
+    match: time.c-byline__item
+  
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: author
+    match: "span.c-byline__item a:not(.c-byline__twitter-handle)"
+
+  - name: author_link
+    match:
+      include: "span.c-byline__item a:not(.c-byline__twitter-handle)"
+      attribute: href
+
+  - name: body
+    match: 
+      include: ".c-entry-summary, div.c-entry-content"
+      keepBasicMarkup: true
