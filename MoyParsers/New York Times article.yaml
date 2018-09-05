@@ -17,11 +17,6 @@ rules:
   - name: date
     match: "header time:last"
   
-  - name: article_img_src
-    match: 
-      include: "meta[property='og:image']"
-      attribute: content
-
   - name: author
     match: "p[itemprop='author creator'] a"
 
