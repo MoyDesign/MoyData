@@ -32,4 +32,7 @@ rules:
     match: 
       include: .post
       keepBasicMarkup: true
-      removeInside: .post-footer
+      removeInside:
+        - .post-footer
+        - h3.entry-title
+        - br
