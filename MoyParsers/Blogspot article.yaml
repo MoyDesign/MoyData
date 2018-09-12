@@ -1,0 +1,35 @@
+info:
+  name: Blogspot article
+  description: Parses a single Blogspot post page.
+  author: Moy.Design
+  type: article
+  domain: blogspot.com
+  path: '([^/]+/)+\w+\.html'
+  testPages:
+    - 'http://skythewood.blogspot.com/2014/11/O22.html'
+
+rules: 
+  - name: logo_small_img_src
+    match:
+      include: "link[rel='icon']"
+      attribute: href
+
+  - name: date
+    match: h2.date-header
+
+  - name: title
+    match: h3.entry-title
+
+  - name: author
+    match: ".post-footer [itemprop='author'] a"
+
+  - name: author_link
+    match:
+      include: ".post-footer [itemprop='author'] a"
+      attribute: href
+
+  - name: body
+    match: 
+      include: .post
+      keepBasicMarkup: true
+      removeInside: .post-footer
