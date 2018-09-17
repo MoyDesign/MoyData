@@ -197,7 +197,10 @@ article ol {
 article ol li {
   padding-left: 4px;
 }
-
+.article-body div {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
 img, video, iframe {
   width: 100vw;
   position: relative;
@@ -529,7 +532,7 @@ section.channel > a > h4 {
         {{/if}}
         <time> &#8226; {{{date}}}</time>
       </address>
-      {{{body}}}
+      <div class='article-body'>{{{body}}}</div>
 
       {{#if comment}}
          <hr>

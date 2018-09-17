@@ -30,9 +30,7 @@ rules:
 
   - name: body
     match: 
-      include: .post
+      include: div.post div.post-body
       keepBasicMarkup: true
       removeInside:
-        - .post-footer
-        - h3.entry-title
         - br
