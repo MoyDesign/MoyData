@@ -13,8 +13,10 @@ rules:
 
   - name: title
     match:
-      include: "meta[property='og:title']"
-      attribute: content
+      or:
+        - include: "meta[property='og:title']"
+          attribute: content
+        - p.title
 
   - name: article_img_src
     match:
@@ -23,12 +25,18 @@ rules:
 
   - name: date
     match:
-      include: ".rel td.extra"
-      keepBasicMarkup: true
-      removeInside: ["p", "div"]
+      or:
+        - include: ".rel td.extra"
+          keepBasicMarkup: true
+          removeInside: ["p", "div"]
+        - p.time
 
   - name: body
-    match: 
-      include: ".text.newtext"
-      removeInside: div
-      keepBasicMarkup: true
+    match:
+      or:
+        - include: ".text.newtext"
+          removeInside: div
+          keepBasicMarkup: true
+        - include: "#alterContent .text"
+          removeInside: ["p.title", "p.time", "div", "ins"]
+          keepBasicMarkup: true
