@@ -1,0 +1,46 @@
+info:
+  name: BBC article
+  description: Parses a single BBC article or a piece of news.
+  author: Moy.Design
+  type: article
+  domain: bbc.com
+  path: '/([^/]+/)+(\w|-)*\d+'
+  testPages:
+    - 'https://www.bbc.com/news/technology-45635736'
+    - 'https://www.bbc.com/sport/golf/45637206'
+
+rules:
+  - name: logo_small_img_src
+    value: "https://www.bbc.com/favicon.ico"
+
+  - name: title
+    match:
+      or:
+        - h1.story-body__h1
+        - h1.story-headline
+
+  - name: date
+    match:
+      or:
+        - .story-body ul.mini-info-list div.date
+        - .story__info time
+  
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match: 
+      or:
+        - include: "div.story-body__inner"
+          keepBasicMarkup: true
+          removeInside:
+            - figure.lead
+            - .parrot
+
+        - include: "div.story-body"
+          keepBasicMarkup: true
+          removeInside:
+            - figure.sp-media-asset--lead
+            - .parrot
