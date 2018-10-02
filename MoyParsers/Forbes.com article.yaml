@@ -1,0 +1,45 @@
+info:
+  name: Forbes.com article
+  description: Parses a single Forbes.com article.
+  type: article
+  domain: forbes.com
+  path: ([^/]+/)+.+
+  testPages:
+    - "https://www.forbes.com/sites/parmyolson/2018/09/26/exclusive-whatsapp-cofounder-brian-acton-gives-the-inside-story-on-deletefacebook-and-why-he-left-850-million-behind"
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://www.forbes.com/favicon.ico"
+
+  - name: author_img_src
+    match:
+      include: ".premium-top-authors a.fs-author-avatar img.fs-author-image"
+      attribute: src
+
+  - name: author
+    match: 
+      include: "meta[name='author']"
+      attribute: content
+
+  - name: author_link
+    match:
+      include: ".premium-top-authors a.fs-author-avatar"
+      attribute: href
+
+  - name: date
+    match: article-header time
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match:
+      include: article-body-container
+      keepBasicMarkup: true
