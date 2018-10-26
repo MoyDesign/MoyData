@@ -1,0 +1,33 @@
+info:
+  name: Alyschu article
+  description: Parses a single Alyschu.wordpress.com article.
+  type: article
+  domain: alyschu.wordpress.com
+  path: /\d\d\d\d/\d\d/\d\d/[^/]+/
+  testPages:
+    - "https://alyschu.wordpress.com/2015/05/27/tensei-shitara-slime-datta-ken-volume-1-chapter-1-the-first-friend-1/"
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://alyschu.wordpress.com/favicon.ico"
+
+  - name: date
+    match:
+      include: span.entry-date
+
+  - name: title
+    match: 
+      include: h2.entry-title
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy

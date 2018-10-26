@@ -1,0 +1,26 @@
+info:
+  name: moonbunnycafe.com article
+  description: Parses a single article.
+  type: article
+  domain: moonbunnycafe.com
+  path: /[^/]+/[^/]+/
+  testPages:
+    - "http://moonbunnycafe.com/tensei-shitara-slime-datta-ken-light-novel/rrs-volume-1-chapter-1-part-6/"
+
+rules: 
+  - name: title
+    match: 
+      include: h2.entry-title
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
