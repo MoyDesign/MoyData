@@ -1,0 +1,44 @@
+info:
+  name: Jigglypuffsdiary.com article
+  description: Parses a single Jigglypuffsdiary.com article.
+  type: article
+  domain: jigglypuffsdiary.com
+  path: ([^/]+/){2}
+  testPages:
+    - "http://jigglypuffsdiary.com/tmpgreboot/the-man-picked-up-by-the-gods-revised-prologue-1/"
+
+rules: 
+  - name: date
+    match:
+      include: time.entry-date
+
+  - name: author
+    match: 
+      include: footer.entry-meta span.cat-links a
+
+  - name: author_link
+    match:
+      include: footer.entry-meta span.cat-links a
+      attribute: href
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match:
+      include: article div.entry-body
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - div.entry-meta
+        - div span a time
+        - header
+        - footer
