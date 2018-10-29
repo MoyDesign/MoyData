@@ -1,0 +1,27 @@
+info:
+  name: Lightnovelbastion.com article
+  description: Parses a single Lightnovelbastion.com article.
+  type: article
+  domain: lightnovelbastion.com
+  path: /release\.php\?p=\d+
+  testPages:
+    - "https://www.lightnovelbastion.com/release.php?p=546"
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://www.lightnovelbastion.com/favicon.ico"
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match:
+      keepBasicMarkup: true
+      include: article div.container div.row
