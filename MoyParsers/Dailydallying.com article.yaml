@@ -1,0 +1,26 @@
+info:
+  name: Dailydallying.com article
+  description: Parses a single Dailydallying.com article.
+  type: article
+  domain: dailydallying.com
+  path: /[^/]+/[^/]+\d+/
+  testPages:
+    - "http://dailydallying.com/nny/nny18/"
+
+rules: 
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: date
+    match:
+      include: span.entry-date
+
+  - name: body
+    match:
+      include: div.post-content
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
