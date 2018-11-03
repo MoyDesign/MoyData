@@ -1,0 +1,31 @@
+info:
+  name: Entruce.wordpress.com article
+  description: Parses a single Entruce.wordpress.com article.
+  type: article
+  domain: entruce.wordpress.com
+  path: /\d\d\d\d/\d\d/\d\d/[^/]+/
+  testPages:
+    - "https://entruce.wordpress.com/2015/07/04/knm-chapter-39/"
+
+rules: 
+  - name: author
+    value: EnTruce 
+
+  - name: author_link
+    value: https://entruce.wordpress.com/
+
+  - name: date
+    match:
+      include: span.posted-on time:first-child
+
+  - name: title
+    match: 
+      include: h1.entry-title
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-previous, div.nav-next
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
