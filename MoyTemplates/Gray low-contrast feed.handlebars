@@ -19,7 +19,7 @@ description: Minimalistic low-contrast template with gray background.
     body {
       line-height: 1.6;
       font-size: 20px;
-      color:#444;
+      color: #444;
       padding:0 10px;
       background-color: #eee;
     }
@@ -102,6 +102,23 @@ description: Minimalistic low-contrast template with gray background.
       max-width: 50px;
       max-height: 50px;
     }
+    details[open] span.summary-closed {
+      display: none;
+    }
+    details:not([open]) span.summary-closed {
+      display: inline-block;
+    }
+    summary {
+      cursor: pointer;
+    }
+    details {
+      border-top: 1px solid #444;
+      margin-bottom: 1em;
+    }
+    details:not([open]) {
+      border-top: none;
+      border-bottom: none;
+    }
   </style>
 </head>
 <body>
@@ -115,7 +132,23 @@ description: Minimalistic low-contrast template with gray background.
     </div>
     <div class='articles'>
       {{#each article}}
-        <div class='article'>
+        <details open>
+          <summary>
+            <span class='summary-closed'>
+              {{#if author}}
+                {{#if author_link}}
+                  <a href="{{author_link}}">{{{author}}}</a>:
+                {{else}}
+                  {{{author}}}:
+                {{/if}}
+              {{/if}}
+              {{#if title_link}}
+                <a href="{{title_link}}">{{{title}}}</a>
+              {{else}}
+                {{title}}
+              {{/if}}
+            </span>
+          </summary>
           <div class='article-header'>
             <div class='author_pic'>
               {{#if author_img_src}}
@@ -163,8 +196,7 @@ description: Minimalistic low-contrast template with gray background.
               {{/if}}
             </span>
           </div>
-        </div>
-        <hr/>
+        </details>
       {{/each}}
     </div>
     <div class='nav'>
