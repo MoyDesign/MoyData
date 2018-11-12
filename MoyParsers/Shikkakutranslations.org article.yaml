@@ -1,0 +1,29 @@
+info:
+  name: Shikkakutranslations.org article
+  description: Parses a single Shikkakutranslations.org article.
+  type: article
+  domain: shikkakutranslations.org
+  path: /([^/]+/){3}
+  testPages:
+    - "https://shikkakutranslations.org/kuro-no-maou/kuro-no-maou-volume-3-arrival-of-the-crusaders/chapter-41/"
+
+rules: 
+  - name: author
+    value: Shikkaku Translations 
+
+  - name: author_link
+    value: https://shikkakutranslations.org/
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+
