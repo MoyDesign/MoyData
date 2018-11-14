@@ -1,0 +1,36 @@
+info:
+  name: Snob.ru blog post
+  description: Parses a single Snob.ru blog post.
+  type: article
+  domain: snob.ru
+  path: /profile/\d+/blog/\d+
+  testPages:
+    - "https://snob.ru/profile/28581/blog/80933"
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://snob.ru/favicon.ico"
+
+  - name: author
+    match: .profileHeader h2
+
+  - name: author_link
+    match:
+      include: ".profileHeader__menu li:first-of-type a"
+      attribute: href
+
+  - name: date
+    match: article .meta a
+
+  - name: title
+    match: article hgroup h1
+
+  - name: body
+    match:
+      include: article .text.content
+      keepBasicMarkup: true
+      removeInside:
+        - .nr-player
+        - .sharer
+        - .banner
+
