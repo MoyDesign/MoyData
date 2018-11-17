@@ -1,0 +1,32 @@
+info:
+  name: Reincarnatedtranslator.wordpress.com article
+  description: Parses a single Reincarnatedtranslator.wordpress.com article.
+  type: article
+  domain: reincarnatedtranslator.wordpress.com
+  path: /\d{4}/\d\d\/\d\d/[^/]+-\d+/
+  testPages:
+    - "https://reincarnatedtranslator.wordpress.com/2018/06/28/reincarnated-as-ai-chapter-16/"
+
+rules: 
+  - name: author
+    value: A Reincarnated Translator
+
+  - name: author_link
+    value: https://reincarnatedtranslator.wordpress.com/ 
+
+  - name: date
+    match: time.entry-date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-links
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
