@@ -1,0 +1,35 @@
+info:
+  name: Pumlated.wordpress.com article
+  description: Parses a single Pumlated.wordpress.com article.
+  type: article
+  domain: pumlated.wordpress.com
+  path: ([^/]+/)+.+
+  testPages:
+    - "https://pumlated.wordpress.com/2016/06/25/80-done-009-to-learn-words-get-a-picture-book/"
+
+rules: 
+
+  - name: author
+    match: span.author
+
+  - name: author_link
+    match:
+      include: span.author a
+      attribute: href
+
+  - name: date
+    match: time.entry-date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-links
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
