@@ -1,0 +1,35 @@
+info:
+  name: wordpress.com article
+  description: Parses any wordpress.com article.
+  type: article
+  domain: wordpress.com
+  path: /\d{4}/\d\d/\d\d/[^/]+-\d+/
+  testPages:
+    - "https://defiring.wordpress.com/2018/02/09/almadianos-eiyuuden-chapter-1/"
+
+rules: 
+  - name: author
+    match:
+      include: span.author
+
+  - name: author_link
+    match:
+      include: span.author a
+      attribute: href
+
+  - name: date
+    match: span.date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-links
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
