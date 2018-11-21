@@ -1,0 +1,31 @@
+info:
+  name: Paichuntranslations.com article
+  description: Parses a single Paichuntranslations.com article.
+  type: article
+  domain: paichuntranslations.com
+  path: /[^/]+/[^/]+-\d+/
+  testPages:
+    - "https://paichuntranslations.com/tdditkc6yw/knight-captains-young-wife-chapter-23/"
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://paichuntranslations.com/favicon.ico"
+
+  - name: author
+    value: Paichun Translations
+
+  - name: author_link
+    value: https://paichuntranslations.com/
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
