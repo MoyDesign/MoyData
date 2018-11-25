@@ -1,0 +1,30 @@
+info:
+  name: Oniichanyamete.moe article
+  description: Parses a single Oniichanyamete.moe article.
+  type: article
+  domain: oniichanyamete.moe
+  path: ([^/]+/)+.+
+  testPages:
+    - "https://oniichanyamete.moe/2015/10/01/reika-sama-001/"
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://oniichanyamete.moe/favicon.ico"
+
+  - name: date
+    match: time.entry-date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
+        - span[style="color:#ffffff;"]
