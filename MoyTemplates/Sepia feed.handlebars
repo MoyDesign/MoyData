@@ -20,7 +20,7 @@ description: Minimalistic template in sepia colors.
       line-height: 1.6;
       font-size: 20px;
       font-family: Georgia, "Times New Roman", serif;
-      color:#5b4636;
+      color: #5b4636;
       padding:0 10px;
       background-color: #f4ecd8;
     }
@@ -102,20 +102,77 @@ description: Minimalistic template in sepia colors.
       max-width: 50px;
       max-height: 50px;
     }
+    details[open] span.summary-closed {
+      display: none;
+    }
+    details:not([open]) span.summary-closed {
+      display: block;
+    }
+    details[open] span.summary-open {
+      display: inline-block;
+    }
+    details:not([open]) span.summary-open {
+      display: none;
+    }
+    span.summary-open, span.summary-closed-plus {
+      float: right;
+      border: 1px solid #5b4636;
+      padding: 0 0.5em;
+      font-weight: bold;
+    }
+    summary {
+      cursor: pointer;
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+    details {
+      margin-bottom: 1em;
+    }
+    details:not([open]) {
+      border-bottom: none;
+    }
+    div.separator {
+      text-align: center;
+      margin: 0.5em 0;
+    }
+    div.separator {
+      text-align: center;
+      margin: 0.5em 0;
+    }
+    div.top.separator {
+      display: none;
+    }
+    details:not([open]) + details[open] div.top.separator {
+      display: block;
+    }
   </style>
 </head>
 <body>
   <div class='container'>
-    <div class='logo' style='float: right;'>
-      {{#if logo_small_img_src}}
-        <a href="{{#if logo_small_link}}{{logo_small_link}}{{else}}/{{/if}}">
-          <img src="{{logo_small_img_src}}">
-        </a>
-      {{/if}}
-    </div>
     <div class='articles'>
       {{#each article}}
-        <div class='article'>
+        <details open>
+          <summary>
+            <span class='summary-closed'>
+              {{#if author}}
+                {{#if author_link}}
+                  <a href="{{author_link}}">{{{author}}}</a>:
+                {{else}}
+                  {{{author}}}:
+                {{/if}}
+              {{/if}}
+              {{#if title_link}}
+                <a href="{{title_link}}">{{{title}}}</a>
+              {{else}}
+                {{title}}
+              {{/if}}
+              <span class='summary-closed-plus'>&plus;</span>
+            </span>
+            <div class='top separator'>*&nbsp;*&nbsp;*</div>
+            <span class='summary-open'>&minus;</span>
+          </summary>
           <div class='article-header'>
             <div class='author_pic'>
               {{#if author_img_src}}
@@ -162,9 +219,9 @@ description: Minimalistic template in sepia colors.
                 {{/if}}          
               {{/if}}
             </span>
+            <div class='separator'>*&nbsp;*&nbsp;*</div>
           </div>
-        </div>
-        <hr/>
+        </details>
       {{/each}}
     </div>
     <div class='nav'>
