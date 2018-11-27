@@ -1,0 +1,38 @@
+info:
+  name: wordpress.com article
+  description: Parses any wordpress.com article.
+  type: article
+  domain: wordpress.com
+# /2018/11/22/title-67/
+# /volume-3/volume-3-chapter-5/
+  path: (/\d{4}/\d\d/\d\d/[^/]+-\d+/)|(/([^/]+-\d+){2}/)
+  testPages:
+    - "https://defiring.wordpress.com/2018/02/09/almadianos-eiyuuden-chapter-1/"
+    - "https://maoyuuthetranslation.wordpress.com/volume-3/volume-3-chapter-5/"
+
+rules: 
+  - name: author
+    match:
+      include: span.author
+
+  - name: author_link
+    match:
+      include: span.author a
+      attribute: href
+
+  - name: date
+    match: span.date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-links, div.page-body
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
