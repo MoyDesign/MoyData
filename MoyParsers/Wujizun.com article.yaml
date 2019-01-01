@@ -1,0 +1,42 @@
+info:
+  name: Wujizun.com article
+  description: Parses a single Wujizun.com article.
+  type: article
+  domain: wujizun.com
+  path: \d\d\d\d/\d\d/\d\d/[^/]*\d+/
+  testPages:
+    - "https://wujizun.com/2018/12/30/mysdv2c34/"
+
+rules: 
+  - name: author
+    match:
+      include: span.author
+
+  - name: author_link
+    match:
+      include: span.author a
+      attribute: href
+
+  - name: date
+    match: span.date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: article_img_src
+    match: 
+      include: "meta[property='og:image']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-links, div.page-body
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
+        - div.cb_p6_patreon_button
+        - div.jp-relatedposts
