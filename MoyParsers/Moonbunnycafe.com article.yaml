@@ -9,13 +9,15 @@ info:
 
 rules: 
   - name: title
-    match: 
-      include: h2.entry-title
-
-  - name: article_img_src
-    match: 
-      include: "meta[property='og:image']"
+    match:
+      include: "meta[property='og:title']"
       attribute: content
+
+  - name: author
+    value: Moon Bunny Cafe 
+
+  - name: author_link
+    value: http://moonbunnycafe.com/
 
   - name: body
     match:
