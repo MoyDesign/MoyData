@@ -22,8 +22,8 @@ rules:
 
   - name: title
     match:
-      include: "meta[property='og:title']"
-      attribute: content
+      include: div.entry-header
+      keepBasicMarkup: true
 
   - name: body
     match:
