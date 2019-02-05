@@ -1,0 +1,37 @@
+info:
+  name: Cloudytranslations.net article
+  description: Parses a single Cloudytranslations.net article.
+  type: article
+  domain: cloudytranslations.net
+  path: ([^/]+/)+.+
+  testPages:
+    - "https://cloudytranslations.net/the-saints-magic-power-is-omnipotent/smpo-v03bts01/"
+    - "https://cloudytranslations.net/the-saints-magic-power-is-omnipotent/smpo-v03a02/"
+    - "https://cloudytranslations.net/i-quit-being-a-noble-and-became-a-commoner/qbnbc-02/"
+
+rules: 
+  - name: author
+    match:
+      include: span.author
+
+  - name: author_link
+    match:
+      include: span.author a
+      attribute: href
+
+  - name: date
+    match: span.date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-links, div.page-body
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
