@@ -1,0 +1,87 @@
+info:
+  name: Varlamov.ru article
+  description: Parses a single Varlamov.ru post.
+  author: Moy.Design
+  type: article
+  domain: varlamov.ru
+  path: '([^/]+/)?[0-9]*\.html'
+  testPages:
+    - 'https://varlamov.ru/3234565.html'
+
+redirect:
+  query:
+    setParams:
+      nojs: 1
+
+rules: 
+  - name: author
+    match: .s-header-extra__user .i-ljuser-username b
+
+  - name: author_link
+    match: 
+      include: ".s-header-extra__user .i-ljuser-username"
+      attribute: href
+
+  - name: date
+    match: "article time[itemprop='dateCreated']"
+
+  - name: title
+    match: .j-e-title
+
+  - name: body
+    match:
+      include: .j-e-text
+      keepBasicMarkup: true
+
+  - name: folded_comment_text
+    value: "(комментарий скрыт)"
+
+  - name: comment
+    match:
+      or: ['.b-tree-twig', '.comment-wrap', '[id^=ljcmt]']
+    rules:
+      - name: indent
+        attribute: style
+        rewrite:
+          find: 'margin-left:\s*([0-9.-]+[a-z%]*)'
+          output: '$1'
+
+      - name: author_img_src
+        match:
+          include: .j-c-head .j-user-pic img
+          attribute: src
+
+      - name: author_link
+        match:
+          or:
+            - include: a.b-leaf-userpic-inner
+              attribute: href
+            - include: .comment-poster-info a.i-ljuser-username
+              attribute: href
+            - include: '[id^=cmtbar] a.i-ljuser-username'
+              attribute: href
+
+      - name: author
+        match:
+          or:
+            - include: a.b-leaf-userpic-inner
+              attribute: "lj:user"
+            - .comment-poster-info a.i-ljuser-username
+            - '[id^=cmtbar] a.i-ljuser-username'
+
+      - name: date
+        match: 
+          or:
+            - 'span.b-leaf-createdtime'
+            - 'span.comment-datetimelink'
+            - '[id^=cmtbar] span[title]'
+
+      - name: body
+        match:
+          or:
+            - include: .b-leaf-article
+              keepBasicMarkup: true
+            - include: .comment-text
+              keepBasicMarkup: true
+            - include: 'div:nth-of-type(2)'
+              keepBasicMarkup: true

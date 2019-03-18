@@ -5,10 +5,12 @@ info:
   domain: wordpress.com
 # /2018/11/22/title-67/
 # /volume-3/volume-3-chapter-5/
-  path: (/\d{4}/\d\d/\d\d/[^/]+-\d+/)|(/([^/]+-\d+){2}/)
+  path: ((\d{4}/\d\d/\d\d/[^/]+-\d+(-\w+)*/)|((\w+-\d+-?)+\/?)+)
   testPages:
     - "https://defiring.wordpress.com/2018/02/09/almadianos-eiyuuden-chapter-1/"
     - "https://maoyuuthetranslation.wordpress.com/volume-3/volume-3-chapter-5/"
+    - "https://shalvationtranslations.wordpress.com/2016/07/12/dungeon-defense-volume-1-chapter-3-part-two/"
+    - "https://shalvationtranslations.wordpress.com/2016/07/27/dungeon-defense-volume-1-afterword/"
 
 rules: 
   - name: author

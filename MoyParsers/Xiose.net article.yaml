@@ -1,0 +1,35 @@
+info:
+  name: Xiose.net article
+  description: Parses a single Xiose.net article.
+  type: article
+  domain: xiose.net
+  path: ([^/]+/)+.+
+  testPages:
+    - "https://xiose.net/2017/07/27/the-man-who-knows-my-past/"
+
+rules: 
+  - name: author
+    match:
+      include: span.author
+
+  - name: author_link
+    match:
+      include: span.author a
+      attribute: href
+
+  - name: date
+    match: span.date
+
+  - name: title
+    match:
+      include: "meta[property='og:title']"
+      attribute: content
+
+  - name: body
+    match:
+      include: div.entry-content, div.nav-links, div.page-body
+      keepBasicMarkup: true
+      removeInside:
+        - div.wpcnt
+        - div.sharedaddy
+        - span.meta-nav
