@@ -27,15 +27,12 @@ rules:
       include: "meta[property='og:title']"
       attribute: content
 
-  - name: article_img_src
-    match: 
-      include: "meta[property='og:image']"
-      attribute: content
-
   - name: body
     match:
       include: div.content__text.js-mediator-article
       keepBasicMarkup: true
+      removeInside:
+        - div.content__figure__share 
 
   - name: comment
     match: div.comment
