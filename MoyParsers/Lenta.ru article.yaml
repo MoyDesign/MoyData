@@ -1,0 +1,35 @@
+info:
+  name: Lenta.ru article
+  description: Parses a single Lenta.ru article.
+  type: article
+  domain: lenta.ru
+  path: \w+/\d+/\d+/\d+/.+
+  testPages:
+    - "https://lenta.ru/news/2019/04/16/human/"
+
+rules: 
+  - name: logo_small_img_src
+    value: "https://lenta.ru/favicon.ico"
+
+  - name: date
+    match: "time[itemprop='datePublished']"
+
+  - name: title
+    match: "h1[itemprop='headline']"
+
+  - name: article_img_src
+    match:
+      or:
+        - include: "meta[property='og:image']"
+          attribute: content
+
+        - include: "div[itemprop='image'] img"
+          attribute: src
+
+  - name: body
+    match:
+      include: div[itemprop='articleBody']
+      keepBasicMarkup: true
+      removeInside:
+        - .b-banner__content
+        - .b-box
