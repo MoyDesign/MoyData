@@ -12,15 +12,24 @@ rules:
     value: "https://fishki.net/favicon.ico"
 
   - name: author
-    match: div.author span[itemprop="name"]
+    match: 
+      or:
+        - div.author span[itemprop="name"]
+        - div.content__icons a.avatar + a
 
   - name: author_link
     match:
-      include: div.author a.subscribe_link
-      attribute: href
+      or:
+        - include: div.author a.subscribe_link
+          attribute: href
+        - include: div.content__icons a.avatar + a
+          attribute: href
 
   - name: date
-    match: div.content__tags span.c-grey-light
+    match:
+      or: 
+        - div.content__tags span.c-grey-light
+        - div.content__icons span.c-grey-light
 
   - name: title
     match:
@@ -29,10 +38,16 @@ rules:
 
   - name: body
     match:
-      include: div.content__text.js-mediator-article
-      keepBasicMarkup: true
-      removeInside:
-        - div.content__figure__share 
+      or:
+        - include: div.content__text.js-mediator-article
+          keepBasicMarkup: true
+          removeInside:
+            - div.content__figure__share 
+
+        - include: div.content__main
+          keepBasicMarkup: true
+          removeInside:
+            - div.adv-placeholder
 
   - name: comment
     match: div.comment
