@@ -26,4 +26,4 @@ rules:
     match: 
       include: "article"
       keepBasicMarkup: true
-      removeInside: ["h1", "#js-article-share-top", "img.webfeedsFeaturedVisual"]
+      removeInside: ["h1", "#js-article-share-top", "img.webfeedsFeaturedVisual", "div.article-stats-wrap"]
