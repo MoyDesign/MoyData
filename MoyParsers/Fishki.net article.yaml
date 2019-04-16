@@ -72,3 +72,5 @@ rules:
         match:
           include: div.comment__text
           keepBasicMarkup: true
+          removeInside:
+            - "img.big + img.small"
