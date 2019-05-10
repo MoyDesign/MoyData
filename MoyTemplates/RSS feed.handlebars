@@ -1,0 +1,27 @@
+{{!--
+name: RSS feed
+type: custom
+customType: rss
+author: Moy.Design
+description: RSS feed template.
+--}}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{ TITLE }}</title>
+        <link>{{ BASE_URL }}</link>
+        <description>{{ TITLE }}</description>
+        {{#each article}}
+            <item>
+                <title>{{title}}</title>
+                <description><![CDATA[ {{{body}}} ]]></description>
+                {{#if author}}
+                    <author>{{{author}}}</author>
+                {{/if}}
+                {{#if title_link}}
+                    <link>{{title_link}}</link>
+                {{/if}}
+            </item>
+        {{/each}}
+    </channel>
+</rss>
