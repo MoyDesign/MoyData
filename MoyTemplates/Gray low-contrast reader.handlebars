@@ -72,6 +72,13 @@ description: Minimalistic low-contrast template with gray background.
       color: #0074D9;
       text-decoration: underline;
     }
+    .nav {
+      margin: 0 auto;
+      text-align: center;
+    }
+    .nav-prev, .nav-middle, .nav-next {
+      display: inline-block;
+    }
     .article-header a {
       text-decoration: none;
     }
@@ -166,6 +173,36 @@ description: Minimalistic low-contrast template with gray background.
           <img src="{{article_img_src}}">
         {{/if}}
         {{{body}}}
+      </div>
+
+      <div class='nav'>
+        <span class='nav-prev'>
+          {{#if nav_prev}}
+            {{#if nav_prev_link}}
+              <a href="{{nav_prev_link}}">{{{nav_prev}}}</a>
+            {{else}}
+              {{{nav_prev}}}
+            {{/if}}          
+          {{/if}}
+        </span>
+        <span class='nav-middle'>
+          {{#if nav_middle}}
+            {{#if nav_middle_link}}
+              <a href="{{nav_middle_link}}">{{{nav_middle}}}</a>
+            {{else}}
+              {{{nav_middle}}}
+            {{/if}}          
+          {{/if}}
+        </span>
+        <span class='nav-next'>
+          {{#if nav_next}}
+            {{#if nav_next_link}}
+              <a href="{{nav_next_link}}">{{{nav_next}}}</a>
+            {{else}}
+              {{{nav_next}}}
+            {{/if}}          
+          {{/if}}
+        </span>
       </div>
 
       {{#if comment}}<center>* * *</center>{{/if}}

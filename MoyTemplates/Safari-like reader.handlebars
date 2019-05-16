@@ -43,6 +43,14 @@ description: Generic Safari-like reader for a single article. Does not support s
     font-size: 1.05em;
    }
 
+    .nav {
+      margin: 0 auto;
+      text-align: center;
+    }
+    .nav-prev, .nav-middle, .nav-next {
+      display: inline-block;
+    }
+
    .page a {
     text-decoration: none;
     color: rgb(32, 0, 127);
@@ -263,6 +271,37 @@ description: Generic Safari-like reader for a single article. Does not support s
         <img src="{{article_img_src}}">
       {{/if}}
       <div class='article-body'>{{{ body }}}</div>
+
+      <div class='nav'>
+        <span class='nav-prev'>
+          {{#if nav_prev}}
+            {{#if nav_prev_link}}
+              <a href="{{nav_prev_link}}">{{{nav_prev}}}</a>
+            {{else}}
+              {{{nav_prev}}}
+            {{/if}}          
+          {{/if}}
+        </span>
+        <span class='nav-middle'>
+          {{#if nav_middle}}
+            {{#if nav_middle_link}}
+              <a href="{{nav_middle_link}}">{{{nav_middle}}}</a>
+            {{else}}
+              {{{nav_middle}}}
+            {{/if}}          
+          {{/if}}
+        </span>
+        <span class='nav-next'>
+          {{#if nav_next}}
+            {{#if nav_next_link}}
+              <a href="{{nav_next_link}}">{{{nav_next}}}</a>
+            {{else}}
+              {{{nav_next}}}
+            {{/if}}          
+          {{/if}}
+        </span>
+      </div>
+      
       {{#if comment}}<hr style='margin: 30px 0;'>{{/if}}
       {{#each comment}}
         <div class='comment {{#unless body}}folded{{/unless}}'
@@ -304,7 +343,7 @@ description: Generic Safari-like reader for a single article. Does not support s
         {{/if}}
         </div>
       {{/each}}
-     </div>
+     </div>      
     </div>
    </div>
   </div>
