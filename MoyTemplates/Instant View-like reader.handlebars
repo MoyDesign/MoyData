@@ -201,24 +201,24 @@ article ol li {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-img, video, iframe {
+img, video, iframe:not(.instagram-media) {
   width: 100vw;
   position: relative;
   left: calc(-50vw + 50%);
   vertical-align: top;
 }
-iframe {
+iframe:not(.instagram-media) {
   height: 56.25vw;
 }
 @media only screen and (min-width: 720px) {
-  img, video, iframe {
+  img, video, iframe:not(.instagram-media) {
     width: initial;
     position: initial;
     left: initial;
     max-width: 100%;
     vertical-align: top;
   }
-  iframe {
+  iframe:not(.instagram-media) {
     width: 640px;
     height: 360px;
   }
@@ -237,7 +237,7 @@ img {
   display: inline-block;
   position: relative;
 }
-.iframe-wrap iframe {
+.iframe-wrap iframe:not(.instagram-media) {
   position: absolute;
   width: 100%;
   height: 100%;
