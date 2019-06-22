@@ -74,3 +74,4 @@ rules:
           keepBasicMarkup: true
           removeInside:
             - "img.big + img.small"
+            - "img[src*='/small/']"
