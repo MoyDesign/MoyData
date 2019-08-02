@@ -16,6 +16,8 @@ rules:
       or:
         - .elevateCover h1
         - h1.graf--title
+        - include: "meta[property='og:title']"
+          attribute: content
 
   - name: date
     match:
@@ -29,24 +31,39 @@ rules:
       attribute: content
   
   - name: author
-    match: ".u-flex1 a[data-action='show-user-card']"
+    match:
+      or:
+        - ".u-flex1 a[data-action='show-user-card']"
+        - include: "meta[name='author']"
+          attribute: content
 
   - name: author_link
-    match: 
-      include: ".postMetaLockup--authorWithBio .u-flex1 a[data-action='show-user-card']"
-      attribute: href
+    match:
+      or:
+        - include: ".postMetaLockup--authorWithBio .u-flex1 a[data-action='show-user-card']"
+          attribute: href
+        - include: "meta[property='article:author']"
+          attribute: content
 
   - name: author_img_src
     match: 
-      include: ".postMetaLockup--authorWithBio .u-flex0 a[data-action='show-user-card'] img"
-      attribute: src
+      or:
+        - include: ".postMetaLockup--authorWithBio .u-flex0 a[data-action='show-user-card'] img"
+          attribute: src
+        - include: "a img[width='48']"
+          attribute: src
 
   - name: body
     match: 
-      include: "div.section-inner, div.section-divider"
-      removeInside:
-        - .progressiveMedia-thumbnail
-        - h1.graf--title
-        - .graf--figure.graf--leading
-      keepBasicMarkup: true
+      or:
+        - include: "div.section-inner, div.section-divider"
+          removeInside:
+            - .progressiveMedia-thumbnail
+            - h1.graf--title
+            - .graf--figure.graf--leading
+          keepBasicMarkup: true
+        - include: article div section
+          keepBasicMarkup: true
+          removeInside:
+            - div > div
 
