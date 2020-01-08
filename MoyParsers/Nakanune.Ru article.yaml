@@ -6,8 +6,7 @@ info:
   domain: nakanune.ru
   path: '/(articles|news|photo).*'
   testPages:
-    - 'https://www.nakanune.ru/news/2018/07/19/22514070/'
-    - 'https://www.nakanune.ru/articles/114124/'
+    - https://www.nakanune.ru/news/2019/12/24/22561517/
 
 rules:
   - name: logo_small_img_src
@@ -32,4 +31,5 @@ rules:
     match: 
       include: "#content"
       keepBasicMarkup: true
-      removeInside: a img.img_body
+      removeInside:
+        - img.float-left:first
