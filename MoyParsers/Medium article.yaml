@@ -4,8 +4,9 @@ info:
   author: Moy.Design
   type: article
   domain: medium.com
-  path: '[^/]+/.+'
-  testPages: 'https://medium.com/the-mission/if-you-only-read-a-few-books-in-2018-read-these-89d03fc149c6'
+  path: '[^/]+/[a-z0-9-]+[a-f0-9]+'
+  testPages: 
+    - https://medium.com/the-mission/if-you-only-read-a-few-books-in-2018-read-these-89d03fc149c6
 
 rules:
   - name: logo_small_img_src
@@ -24,6 +25,7 @@ rules:
       or:
         - .elevateCover time
         - .ui-caption.postMetaInline time
+        - div.gu.ak.r > span > span > div > a
 
   - name: article_img_src
     match: 
@@ -62,8 +64,7 @@ rules:
             - h1.graf--title
             - .graf--figure.graf--leading
           keepBasicMarkup: true
-        - include: article div section
+        - include: article div section p
           keepBasicMarkup: true
-          removeInside:
-            - div > div
+          outerNode: true
 
