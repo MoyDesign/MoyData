@@ -4,15 +4,16 @@ info:
   author: Moy.Design
   type: article
   domain: vc.ru
-  path: '/[0-9]+-.+'
-  testPages: 'https://vc.ru/41047-the-information-apple-planiruet-zapustit-edinuyu-podpisku-na-svoi-servisy'
+  path: '[^/]+/[0-9]+-.+'
+  testPages:
+    - https://vc.ru/flood/41047-the-information-apple-planiruet-zapustit-edinuyu-podpisku-na-svoi-servisy
 
 rules:
   - name: logo_small_img_src
     value: "https://vc.ru/favicon.ico"
 
   - name: title
-    match: .entry_header__title
+    match: h1.content-header__title
 
   - name: article_img_src
     match: 
@@ -20,21 +21,18 @@ rules:
       attribute: content
   
   - name: author
-    match: .entry_header__author .entry_header__author__name
+    match: a.content-header-author--user
 
   - name: author_link
     match:
-      include: a.entry_header__author
+      include: a.content-header-author--user
       attribute: href
 
   - name: date
-    match:
-      include: "meta[property='article:published_time']"
-      attribute: content
+    match: div.content-header-number time
   
   - name: body
     match: 
-      include: .b-article
+      include: div.content div.layout--a > p
       keepBasicMarkup: true
-      removeInside:
-        - .entry_content__shares
+      outerNode: true
