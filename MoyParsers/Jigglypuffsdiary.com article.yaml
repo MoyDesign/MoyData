@@ -13,12 +13,11 @@ rules:
       include: time.entry-date
 
   - name: author
-    match: 
-      include: footer.entry-meta span.cat-links a
+    match: div.entry-meta span.entry-author a
 
   - name: author_link
     match:
-      include: footer.entry-meta span.cat-links a
+      include: div.entry-meta span.entry-author a
       attribute: href
 
   - name: title
@@ -31,14 +30,26 @@ rules:
       include: "meta[property='og:image']"
       attribute: content
 
+  - name: nav_next
+    match: article nav div.nav-next a
+
+  - name: nav_next_link
+    match:
+      include: article nav div.nav-next a
+      attribute: href
+
+  - name: nav_prev
+    match: article nav div.nav-previous a
+
+  - name: nav_prev_link
+    match:
+      include: article nav div.nav-previous a
+      attribute: href
+
   - name: body
     match:
-      include: article div.entry-body
+      include: div.entry-content
       keepBasicMarkup: true
       removeInside:
-        - div.wpcnt
-        - div.sharedaddy
-        - div.entry-meta
-        - div span a time
-        - header
-        - footer
+        - div.sharedaddy 
+        
