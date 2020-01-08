@@ -5,25 +5,24 @@ info:
   type: article
   domain: vedomosti.ru
   path: '/[^/]+/[^/]+/.*'
-  testPages: 'https://www.vedomosti.ru/economics/articles/2018/06/29/774140-veb-otkazatsya-ot-ubitochnih-proektah'
+  testPages:
+    - https://www.vedomosti.ru/economics/articles/2018/06/29/774140-veb-otkazatsya-ot-ubitochnih-proektah
 
 rules:
   - name: logo_small_img_src
-    value: "https://www.vedomosti.ru/assets/vedomosti_180x180.png"
+    value: "https://www.vedomosti.ru/favicon.ico"
 
   - name: title
-    match: h1.title
+    match: h1.article-headline__title
 
   - name: subtitle
-    match: .subtitle
+    match: div.article-headline__subtitle
 
   - name: date
-    match: ".pubdate a:not(.link)"
+    match: time.article-meta__date
 
   - name: author
-    match:
-      include: ".b-document__authors ul li a"
-      exclude: ".b-document__authority"
+    match: div.article-authors a
 
   - name: article_img_src
     match:
@@ -32,6 +31,5 @@ rules:
 
   - name: body
     match: 
-      include: .b-document__body
-      removeInside: .no-print
+      include: div.article-boxes-list
       keepBasicMarkup: true
