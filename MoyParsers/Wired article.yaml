@@ -4,29 +4,26 @@ info:
   type: article
   domain: wired.com
   path: ([^/]+/)+.+
-  testPages: 'https://www.wired.com/story/facebook-security-breach-third-party-sites/'
+  testPages:
+    - https://www.wired.com/story/facebook-security-breach-third-party-sites/
 
 rules: 
   - name: logo_small_img_src
     value: 'https://www.wired.com/favicon.ico'
 
   - name: author
-    match: 
-      include: "meta[name='parsely-author']"
-      attribute: content
+    match: p.byline--author a
 
   - name: date
-    match: 
-      include: "meta[name='parsely-pub-date']"
-      attribute: content
-    rewrite:
-      find: "([^T]+)T([^.]+).*"
-      output: "$1 $2"
+    match: time.content-header__publish-date
 
   - name: title
     match: 
       include: "meta[property='og:title']"
       attribute: content
+
+  - name: subtitle
+    match: p.content-header__dek
 
   - name: article_img_src
     match: 
@@ -35,5 +32,7 @@ rules:
 
   - name: body
     match:
-      include: "article.article-body-component > div:not([class])"
+      include: div.article__body
       keepBasicMarkup: true
+      removeInside:
+        - div.related-list
