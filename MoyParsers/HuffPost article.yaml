@@ -3,21 +3,24 @@ info:
   description: Parses a single HuffPost (formerly The Huffington Post) article or a piece of news.
   author: Moy.Design
   type: article
-  domain: huffingtonpost.com
+  domain: huffpost.com
   path: '/entry/.+'
   testPages:
-    - 'https://www.huffingtonpost.com/entry/best-fast-food-fried-chicken_us_5b328c43e4b0cb56051ccaab?section=us_taste'
-    - 'https://www.huffingtonpost.com/entry/cottage-cheese-nutritional-benefits-yogurt_us_5b3a33cbe4b0f3c221a2e136'
+    - 'https://www.huffpost.com/entry/best-fast-food-fried-chicken_us_5b328c43e4b0cb56051ccaab?section=us_taste'
+    - 'https://www.huffpost.com/entry/cottage-cheese-nutritional-benefits-yogurt_us_5b3a33cbe4b0f3c221a2e136'
 
 rules:
   - name: logo_small_img_src
-    value: "https://www.huffingtonpost.com/favicon.ico"
+    value: "https://www.huffpost.com/favicon.ico"
 
   - name: title
-    match: h1.headline__title
+    match: 
+      or:
+        - h1.headline
+        - h1.headline__title
 
   - name: date
-    match: "span.timestamp__date--published"
+    match: 'div.timestamp span[aria-hidden="true"]'
   
   - name: article_img_src
     match: 
@@ -25,18 +28,34 @@ rules:
       attribute: content
 
   - name: author
-    match: ".byline__authors a.yr-author-name"
+    match:
+      or:
+        - "div.entry__byline__author a"
+        - ".byline__authors a.yr-author-name"
 
   - name: author_link
     match:
-      include: ".byline__authors a.yr-author-name"
-      attribute: href
+      or:
+        - include: "div.entry__byline__author a"
+          attribute: href
+        - include: ".byline__authors a.yr-author-name"
+          attribute: href
 
   - name: body
-    match: 
-      include: "div.entry__text"
-      keepBasicMarkup: true
-      removeInside:
-        - .related-articles
-        - .listicle__slide-credits
-        - "section[data-block-class='app-download-interstitial']"
+    match:
+      or:
+      - include: "#entry-body>section"
+        keepBasicMarkup: true
+        removeInside:
+          - section.newsletter
+          - aside.cli-related-articles
+          - figure.cli-image
+
+      - include: "div.entry__text"
+        keepBasicMarkup: true
+        removeInside:
+          - section
+          - .related-articles
+          - .listicle__slide-credits
+          - "section[data-block-class='app-download-interstitial']"
+
