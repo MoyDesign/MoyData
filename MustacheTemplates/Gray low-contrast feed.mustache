@@ -1,0 +1,255 @@
+{{!--
+name: Gray low-contrast feed
+type: feed
+author: Moy.Design
+description: Minimalistic low-contrast template with gray background.
+  Displays a blog feed in a human-friendly way without needless formatting.
+  Inspired by http://bettermotherfuckingwebsite.com/
+--}}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <base href="{{ BASE_URL }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ TITLE }}</title>
+  {{{ ICON_TAGS }}}
+  {{{ OPEN_GRAPH_TAGS }}}
+  <style>
+    body {
+      line-height: 1.6;
+      font-size: 20px;
+      color: #444;
+      padding:0 10px;
+      background-color: #eee;
+    }
+    .container {
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    .article-body img {
+      margin: 0.5em auto;
+      display: block;
+      height: auto;
+      max-width: 100%;
+    }
+    .article-body a img {
+      margin: inherit;
+      display: inherit;
+      height: inherit;
+    }
+    .article-body iframe:not(.instagram-media) {
+      max-width: 100%;
+      width: 640px;
+      height: 360px;
+    }
+    .author_pic {
+      float: left;
+      margin-right: 0.5em;
+    }
+    .article-body {
+      clear: both;
+    }
+    .article-body div {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+    h1 {
+      font-size: 1.25em;
+    }
+    h2 {
+      font-size: 1.125em;
+    }
+    h3 {
+      font-size: 1.05em;
+    }
+    a, a:visited {
+      color: #0074D9;
+      text-decoration: underline;
+    }
+    .article-header a {
+      text-decoration: none;
+    }
+    .article-body a:visited {
+      color: #B10DC9;
+    }
+    hr {
+      width: 70%;
+      margin: 2em auto;
+    }
+    .nav {
+      margin: 0 auto;
+      text-align: center;
+    }
+    .nav-prev, .nav-middle, .nav-next {
+      display: inline-block;
+    }
+    .title {
+      margin: 0;
+      line-height: 1.2;
+    }
+    .date {
+      color: #888;
+      font-size: smaller;
+    }
+    .new-comment {
+      margin-left: 1em;
+    }
+    .logo {
+      float: right;
+    }
+    .logo img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+    details[open] span.summary-closed {
+      display: none;
+    }
+    details:not([open]) span.summary-closed {
+      display: block;
+    }
+    details[open] span.summary-open {
+      display: inline-block;
+    }
+    details:not([open]) span.summary-open {
+      display: none;
+    }
+    span.summary-open, span.summary-closed-plus {
+      float: right;
+      border: 1px solid #444;
+      padding: 0 0.5em;
+      font-weight: bold;
+    }
+    summary {
+      cursor: pointer;
+      list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+    details {
+      margin-bottom: 1em;
+    }
+    details:not([open]) {
+      border-bottom: none;
+    }
+    div.separator {
+      text-align: center;
+      margin: 0.5em 0;
+    }
+    div.top.separator {
+      display: none;
+    }
+    details:not([open]) + details[open] div.top.separator {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class='container'>
+    <div class='articles'>
+      {{#article}}
+        <details open>
+          <summary>
+            <span class='summary-closed'>
+              {{#author}}
+                {{#author_link}}
+                  <a href="{{author_link}}">{{{author}}}</a>:
+                {{/author_link}}
+                {{^author_link}}
+                  {{{author}}}:
+                {{/author_link}}
+              {{/author}}
+              {{#title_link}}
+                <a href="{{title_link}}">{{{title}}}</a>
+              {{/title_link}}
+              {{^title_link}}
+                {{title}}
+              {{/title_link}}
+              <span class='summary-closed-plus'>&plus;</span>
+            </span>
+            <div class='top separator'>*&nbsp;*&nbsp;*</div>
+            <span class='summary-open'>&minus;</span>
+          </summary>
+          <div class='article-header'>
+            <div class='author_pic'>
+              {{#author_img_src}}
+                {{#author_link}}
+                  <a href="{{author_link}}"><img src="{{author_img_src}}"></a>
+                {{/author_link}}
+                {{^author_link}}
+                  <img src="{{author_img_src}}">
+                {{/author_link}}
+              {{/author_img_src}}
+            </div>
+            <div class='author'>
+              {{#author_link}}
+                <a href="{{author_link}}">{{{author}}}</a>
+              {{/author_link}}
+              {{^author_link}}
+                {{{author}}}
+              {{/author_link}}
+            </div>
+            <h1 class='title'>
+              {{#title_link}}
+                <a href="{{title_link}}">{{{title}}}</a>
+              {{/title_link}}
+              {{^title_link}}
+                {{title}}
+              {{/title_link}}
+            </h1>
+            <div class='date'>{{date}}</div>
+          </div>
+          <div class='article-body'>{{{body}}}</div>
+          <div class='article-comments'>
+            <span class='comments'>
+              {{#comments}}
+                {{#comments_link}}
+                  <a href="{{comments_link}}">{{{comments}}}</a>
+                {{/comments_link}}
+                {{^comments_link}}
+                  {{{comments}}}
+                {{/comments_link}}
+              {{/comments}}
+            </span>
+            <span class='new-comment'>
+              {{#new_comment}}
+                {{#new_comment_link}}
+                  <a href="{{new_comment_link}}">{{{new_comment}}}</a>
+                {{/new_comment_link}}
+                {{^new_comment_link}}
+                  {{{new_comment}}}
+                {{/new_comment_link}}
+              {{/new_comment}}
+            </span>
+            <div class='separator'>*&nbsp;*&nbsp;*</div>
+          </div>
+        </details>
+      {{/article}}
+    </div>
+    <div class='nav'>
+      <span class='nav-prev'>
+        {{#nav_prev}}
+          {{#nav_prev_link}}
+            <a href="{{nav_prev_link}}">{{{nav_prev}}}</a>
+          {{/nav_prev_link}}
+        {{/nav_prev}}
+      </span>
+      <span class='nav-middle'>
+        {{#nav_middle}}
+          {{#nav_middle_link}}
+            <a href="{{nav_middle_link}}">{{{nav_middle}}}</a>
+          {{/nav_middle_link}}
+        {{/nav_middle}}
+      </span>
+      <span class='nav-next'>
+        {{#nav_next}}
+          {{#nav_next_link}}
+            <a href="{{nav_next_link}}">{{{nav_next}}}</a>
+          {{/nav_next_link}}
+        {{/nav_next}}
+      </span>
+    </div>
+  </div>
+</body>
+</html>
