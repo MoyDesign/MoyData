@@ -1,0 +1,255 @@
+{{!--
+name: Sepia reader
+type: article
+author: Moy.Design
+description: Minimalistic template in sepia colors.
+  Displays a single blog post in a human-friendly way without needless formatting.
+  Initially based on 'Gray low-contrast reader'.
+--}}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="{{ BASE_URL }}">
+  <title>{{ TITLE }}</title>
+  {{{ ICON_TAGS }}}
+  {{{ OPEN_GRAPH_TAGS }}}
+  <style>
+    body {
+      line-height: 1.6;
+      font-size: 20px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #5b4636;
+      padding:0 10px;
+      background-color: #f4ecd8;
+    }
+    .container {
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    .article-body img, .comment-body img {
+      margin: 0.5em auto;
+      display: block;
+      height: auto;
+      max-width: 100%;
+    }
+    .article-body a img, .comment-body a img {
+      margin: inherit;
+      display: inherit;
+      height: inherit;
+      max-width: 100%;
+    }
+    .article-body iframe:not(.instagram-media), .comment-body iframe:not(.instagram-media) {
+      max-width: 100%;
+      width: 640px;
+      height: 360px;
+    }
+    .article-body a:visited, .comment-body a:visited {
+      color: #B10DC9;
+    }
+    .article-body div {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+    .logo {
+      float: right;
+    }
+    .author_pic, .comment-author-pic {
+      float: left;
+      margin-right: 0.5em;
+    }
+    .author_pic img, .comment-author-pic img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+    h1 {
+      font-size: 1.25em;
+    }
+    h2 {
+      font-size: 1.125em;
+    }
+    h3 {
+      font-size: 1.05em;
+    }
+    a, a:visited {
+      color: #0095dd;
+      text-decoration: underline;
+    }
+    .nav {
+      margin: 0 auto;
+      text-align: center;
+    }
+    .nav-prev, .nav-middle, .nav-next {
+      display: inline-block;
+    }
+    .article-header a {
+      text-decoration: none;
+    }
+    .title, .comment-author {
+      margin: 0;
+      line-height: 1.2;
+    }
+    .subtitle {
+      margin: 0;
+      line-height: 1.2;
+      font-style: italic;
+      font-weight: normal;
+    }
+    .date, .comment-date, .folded-comment {
+      font-size: smaller;
+    }
+    .comment.folded + .comment.folded::after {
+      content: "...";
+      font-size: smaller;
+    }
+    .comment.folded + .comment.folded + .comment.folded {
+      display: none;
+    }
+    .clearfix {
+      clear: both;
+    }
+    .comment-header {
+      margin-top: 1.5em;
+      padding-top: 0.3em;
+    }
+    .logo img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+    .comment-body p {
+      margin-top: 0;
+    }
+    .comment-author-pic img {
+      max-height: 50px;
+    }
+    .comment[indent]     {margin-left: 240px;}
+    .comment[indent='0'], .comment[indent='1'] {margin-left: 0;}
+    .comment[indent='2'] {margin-left: 30px;}
+    .comment[indent='3'] {margin-left: 60px;}
+    .comment[indent='4'] {margin-left: 90px;}
+    .comment[indent='5'] {margin-left: 120px;}
+    .comment[indent='6'] {margin-left: 150px;}
+    .comment[indent='7'] {margin-left: 180px;}
+    .comment[indent='8'] {margin-left: 210px;}
+    .comment[indent='9'] {margin-left: 240px;}
+  </style>
+</head>
+<body>
+  <div class='container'>
+    <div class='article'>
+      <div class='article-header'>
+        <div class='logo'>
+          {{#logo_small_img_src}}
+            <a
+                {{#logo_small_link}}
+                    href="{{logo_small_link}}"
+                {{/logo_small_link}}
+                {{^logo_small_link}}
+                    href="/"
+                {{/logo_small_link}}
+            >
+              <img src="{{logo_small_img_src}}">
+            </a>
+          {{/logo_small_img_src}}
+        </div>
+        <div class='author_pic'>
+          {{#author_img_src}}
+            {{#author_link}}
+              <a href="{{author_link}}"><img src="{{author_img_src}}"></a>
+            {{/author_link}}
+            {{^author_link}}
+              <img src="{{author_img_src}}">
+            {{/author_link}}
+          {{/author_img_src}}
+        </div>
+        <div class='author'>
+          {{#author_link}}
+            <a href="{{author_link}}">{{{author}}}</a>
+          {{/author_link}}
+          {{^author_link}}
+            {{{author}}}
+          {{/author_link}}
+        </div>
+        <h1 class='title'>{{{title}}}</h1>
+        <h3 class='subtitle'>{{{subtitle}}}</h3>
+        <div class='date'>{{{date}}}</div>
+        <div class='clearfix'></div>
+      </div>
+      <div class='article-body'>
+        {{#article_img_src}}
+          <img src="{{article_img_src}}">
+        {{/article_img_src}}
+        {{{body}}}
+      </div>
+
+      <div class='nav'>
+        <span class='nav-prev'>
+          {{#nav_prev}}
+            {{#nav_prev_link}}
+              <a href="{{nav_prev_link}}">{{{nav_prev}}}</a>
+            {{/nav_prev_link}}
+          {{/nav_prev}}
+        </span>
+        <span class='nav-middle'>
+          {{#nav_middle}}
+            {{#nav_middle_link}}
+              <a href="{{nav_middle_link}}">{{{nav_middle}}}</a>
+            {{/nav_middle_link}}
+          {{/nav_middle}}
+        </span>
+        <span class='nav-next'>
+          {{#nav_next}}
+            {{#nav_next_link}}
+              <a href="{{nav_next_link}}">{{{nav_next}}}</a>
+            {{/nav_next_link}}
+          {{/nav_next}}
+        </span>
+      </div>
+
+      {{#comment}}
+        <div class='comment {{^body}}folded{{/body}}'
+          {{#level}}
+            indent='{{level}}'
+          {{/level}}
+          {{^level}}
+              {{#indent}}
+                style='margin-left: {{indent}}'
+              {{/indent}}
+          {{/level}}
+        >
+        {{#body}}
+          <div class='comment-header'>
+            <div class='comment-author-pic'>
+              {{#author_img_src}}
+                {{#author_link}}
+                  <a href="{{author_link}}"><img src="{{author_img_src}}"></a>
+                {{/author_link}}
+                {{^author_link}}
+                  <img src="{{author_img_src}}">
+                {{/author_link}}
+              {{/author_img_src}}
+            </div>
+            <div class='comment-author'>
+              {{#author_link}}
+                <a href="{{author_link}}">{{{author}}}</a>
+              {{/author_link}}
+              {{^author_link}}
+                {{{author}}}
+              {{/author_link}}
+            </div>
+            <div class='comment-date'>{{{date}}}</div>
+          </div>
+          <div class='comment-body clearfix'>{{{body}}}</div>
+        {{/body}}
+        {{^body}}
+          <div class='folded-comment'>
+              (comment folded)
+          </div>
+        {{/body}}
+        </div>
+      {{/comment}}
+    </div>
+  </div>
+</body>
+</html>
